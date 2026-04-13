@@ -114,7 +114,7 @@ Open `notebooks/1_agenticrag_bench.ipynb` and run all cells.
 ```
 agenticrag-bench/
 ├── notebooks/
-│   └── 1_agenticrag_bench.ipynb     ← Week 1 experiment
+│   └── 1_agenticrag_bench.ipynb      ← Week 1 experiment
 ├── data/
 │   ├── questions/
 │   │   └── musique_10.json           ← 10 MuSiQue questions
