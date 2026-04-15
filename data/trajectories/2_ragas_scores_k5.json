@@ -1,0 +1,8 @@
+{
+  "faithfulness": 0.3917,
+  "answer_relevancy": 0.2,
+  "context_precision": 0.4667,
+  "evaluation_time_seconds": 182.1,
+  "judge_model": "groq/llama-3.3-70b-versatile",
+  "embedding_model": "ollama/nomic-embed-text"
+}

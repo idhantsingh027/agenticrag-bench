@@ -1,0 +1,162 @@
+[
+  {
+    "id": "2hop__460946_294723",
+    "question": "Who is the spouse of the Green performer?",
+    "answer": "Miquette Giraudy",
+    "num_hops": 2,
+    "decomposition": [
+      {
+        "sub_q": "Green >> performer",
+        "sub_a": "Steve Hillage"
+      },
+      {
+        "sub_q": "#1 >> spouse",
+        "sub_a": "Miquette Giraudy"
+      }
+    ]
+  },
+  {
+    "id": "2hop__252311_366220",
+    "question": "Who founded the company that distributed the film UHF?",
+    "answer": "Mike Medavoy",
+    "num_hops": 2,
+    "decomposition": [
+      {
+        "sub_q": "UHF >> distributed by",
+        "sub_a": "Orion Pictures"
+      },
+      {
+        "sub_q": "#1 >> founded by",
+        "sub_a": "Mike Medavoy"
+      }
+    ]
+  },
+  {
+    "id": "2hop__701895_752697",
+    "question": "What administrative territorial entity is the owner of Ciudad Deportiva located?",
+    "answer": "Tamaulipas",
+    "num_hops": 2,
+    "decomposition": [
+      {
+        "sub_q": "Ciudad Deportiva >> owned by",
+        "sub_a": "Nuevo Laredo"
+      },
+      {
+        "sub_q": "#1 >> located in the administrative territorial entity",
+        "sub_a": "Tamaulipas"
+      }
+    ]
+  },
+  {
+    "id": "2hop__259228_793698",
+    "question": "Where is Ulrich Walter's employer headquartered?",
+    "answer": "Cologne",
+    "num_hops": 2,
+    "decomposition": [
+      {
+        "sub_q": "Ulrich Walter >> employer",
+        "sub_a": "German Aerospace Center"
+      },
+      {
+        "sub_q": "#1 >> headquarters location",
+        "sub_a": "Cologne"
+      }
+    ]
+  },
+  {
+    "id": "2hop__481349_302087",
+    "question": "Which company owns the manufacturer of Learjet 60?",
+    "answer": "Bombardier Inc.",
+    "num_hops": 2,
+    "decomposition": [
+      {
+        "sub_q": "Learjet 60 >> manufacturer",
+        "sub_a": "Bombardier Aerospace"
+      },
+      {
+        "sub_q": "#1 >> owned by",
+        "sub_a": "Bombardier Inc."
+      }
+    ]
+  },
+  {
+    "id": "2hop__697790_864352",
+    "question": "Who is the child of Caroline LeRoy's spouse?",
+    "answer": "Fletcher Webster",
+    "num_hops": 2,
+    "decomposition": [
+      {
+        "sub_q": "Caroline LeRoy >> spouse",
+        "sub_a": "Daniel Webster"
+      },
+      {
+        "sub_q": "#1 >> child",
+        "sub_a": "Fletcher Webster"
+      }
+    ]
+  },
+  {
+    "id": "2hop__207476_625987",
+    "question": "Who is the grandmother of Philippe, Duke of Orl\u00e9ans?",
+    "answer": "Marie de' Medici",
+    "num_hops": 2,
+    "decomposition": [
+      {
+        "sub_q": "Philippe, Duke of Orl\u00e9ans >> father",
+        "sub_a": "Louis XIII"
+      },
+      {
+        "sub_q": "#1 of France >> mother",
+        "sub_a": "Marie de' Medici"
+      }
+    ]
+  },
+  {
+    "id": "2hop__390947_232243",
+    "question": "What is the goal of the group that European Movement Germany is a member of?",
+    "answer": "European integration",
+    "num_hops": 2,
+    "decomposition": [
+      {
+        "sub_q": "European Movement Germany >> member of",
+        "sub_a": "European Movement International"
+      },
+      {
+        "sub_q": "#1 >> movement",
+        "sub_a": "European integration"
+      }
+    ]
+  },
+  {
+    "id": "2hop__354635_174222",
+    "question": "What company succeeded the owner of Empire Sports Network?",
+    "answer": "Time Warner Cable",
+    "num_hops": 2,
+    "decomposition": [
+      {
+        "sub_q": "Empire Sports Network >> owned by",
+        "sub_a": "Adelphia Communications Corporation"
+      },
+      {
+        "sub_q": "#1 >> followed by",
+        "sub_a": "Time Warner Cable"
+      }
+    ]
+  },
+  {
+    "id": "2hop__635187_861533",
+    "question": "What province shares a border with the province where Lago District is located?",
+    "answer": "Cabo Delgado Province",
+    "num_hops": 2,
+    "decomposition": [
+      {
+        "sub_q": "Lago District >> located in the administrative territorial entity",
+        "sub_a": "Niassa Province"
+      },
+      {
+        "sub_q": "#1 >> shares border with",
+        "sub_a": "Cabo Delgado Province"
+      }
+    ]
+  }
+]

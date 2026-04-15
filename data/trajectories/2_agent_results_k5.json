@@ -1,0 +1,308 @@
+[
+  {
+    "question_id": "2hop__460946_294723",
+    "question": "Who is the spouse of the Green performer?",
+    "ground_truth": "Miquette Giraudy",
+    "num_hops": 2,
+    "predicted_answer": "Based on the search results, I was unable to find a Green performer's spouse. However, there are several individuals associated with the name \"Green\" in various fields such as music and acting.\n\nIf you could provide more context or clarify which Green performer you are referring to, I would be happy to try and assist you further.",
+    "success": true,
+    "total_wall_latency_ms": 11076.4,
+    "trajectory": [
+      {
+        "step_id": 1,
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 5,
+        "retrieved_content": [
+          "Actress / director / singer Phylicia Rash\u0101d is the older sister of performer Debbie Allen, who is married to former NBA basketball player, Norm Nixon. Phylicia Rash\u0101d is the former spouse of both Victor Willis, former lead singer of the group Village People, and former NFL football player turned sportscaster, Ahmad Rash\u0101d. Phylicia and Ahmad Rash\u0101d are the parents of actress Condola Rash\u0101d.",
+          "Mok Kwai-lan (; October 15, 1892 \u2013 November 3, 1982) was the fourth spouse of Lingnan martial arts grandmaster Wong Fei-hung.",
+          "Miquette Giraudy (born 9 February 1953, Nice, France) is a keyboard player and vocalist, best known for her work in Gong and with her partner Steve Hillage. She and Hillage currently form the core of the ambient band System 7. In addition to her performances in music, she has also worked as an actress, film editor and writer. In each role, she has used different stage names.",
+          "\"Little Green\" is a song composed and performed by Joni Mitchell. It is the third track on her 1971 album \"Blue\".",
+          "Native Son is a 1941 Broadway drama written by Paul Green and Richard Wright based on Wright's novel \"Native Son\". It was produced by Orson Welles and John Houseman with Bern Bernard as associate producer and directed by Welles with scenic design by John Morcom. It ran for 114 performances from March 24, 1941 to June 28, 1941 at the St. James Theatre."
+        ],
+        "precision_at_k": 0.2,
+        "is_loop_step": false,
+        "tokens_estimate": 345,
+        "latency_ms": 23.4
+      }
+    ],
+    "trajectory_summary": {
+      "total_steps": 1,
+      "unique_queries": [
+        "Green performer spouse"
+      ],
+      "redundant_queries": 0,
+      "redundancy_rate": 0.0,
+      "loop_detected": false,
+      "loop_steps": 0,
+      "avg_step_precision_at_k": 0.2,
+      "total_tokens": 345,
+      "total_latency_ms": 23.4,
+      "tokens_per_step": 345.0
+    },
+    "D1_answer_correctness": {
+      "exact_match": false,
+      "near_match": false,
+      "token_recall": 0.0,
+      "seq_similarity": 0.219,
+      "score": 0.0
+    },
+    "D5_trajectory_efficiency": {
+      "total_steps": 1,
+      "redundancy_rate": 0.0,
+      "tokens_per_step": 345.0,
+      "loop_detected": false,
+      "loop_penalty_applied": 0.0,
+      "efficiency_score": 0.871,
+      "total_tokens": 345,
+      "tokens_per_correct_answer": Infinity
+    }
+  },
+  {
+    "question_id": "2hop__252311_366220",
+    "question": "Who founded the company that distributed the film UHF?",
+    "ground_truth": "Mike Medavoy",
+    "num_hops": 2,
+    "predicted_answer": "Based on the search results, I was unable to find information about who founded the company that distributed the film UHF. However, I can suggest some possible sources where you may be able to find this information:\n\n* The Internet Movie Database (IMDb) - This website has a wealth of information about films, including production companies and distributors.\n* Wikipedia - You can search for articles about the film UHF or its distributor to see if there is any information available.\n* Film industry websites - Websites such as Variety or The Hollywood Reporter may have articles or news stories about the distribution company that handled UHF.\n\nIf you could provide more context or clarify which company distributed UHF, I would be happy to try and help further.",
+    "success": true,
+    "total_wall_latency_ms": 11290.1,
+    "trajectory": [
+      {
+        "step_id": 1,
+        "query": "UHF film distributor founder",
+        "num_docs_retrieved": 5,
+        "retrieved_content": [
+          "Morris Mike Medavoy (born January 21, 1941) is an American film producer and executive, co-founder of Orion Pictures (1978), former chairman of TriStar Pictures, former head of production for United Artists (1974\u20131978) and current chairman and CEO of Phoenix Pictures.",
+          "SModcast Pictures is an American film distribution company and a film and television production company founded by Kevin Smith in 2011. Kevin Smith announced at the 2011 Sundance Film Festival that he would release his latest movie \"Red State\" himself under his own distribution company \"SModcast Pictures\" by touring the film instead of having a traditional release.",
+          "Amblin Entertainment is an American film production company founded by director and producer Steven Spielberg, and film producers Kathleen Kennedy and Frank Marshall in 1981. The company's headquarters are located on the backlot of Universal Studios in Universal City, California. The company distributes all of the films from Amblin Partners under the Amblin Entertainment name.",
+          "Marketwired is a press release distribution service headquartered in Toronto, Ontario, Canada. Marketwired was founded in 1993 and incorporated in the U.S. in 1999. The company distributes press releases via traditional methods (Associated Press, Bloomberg, etc.) as well as new media methods and other services.",
+          "Sleaszy Rider Records is an independent record label which was founded in 1999 by Tolis G. Palantzas. The head office of the label is located in Greece. The label is mainly distributed in Europe by Sony Music/EMI. The label also distributes releases in Greece from numerous labels, including Roadrunner Records, SPV, and Pagan Records."
+        ],
+        "precision_at_k": 0.2,
+        "is_loop_step": false,
+        "tokens_estimate": 422,
+        "latency_ms": 14.8
+      }
+    ],
+    "trajectory_summary": {
+      "total_steps": 1,
+      "unique_queries": [
+        "UHF film distributor founder"
+      ],
+      "redundant_queries": 0,
+      "redundancy_rate": 0.0,
+      "loop_detected": false,
+      "loop_steps": 0,
+      "avg_step_precision_at_k": 0.2,
+      "total_tokens": 422,
+      "total_latency_ms": 14.8,
+      "tokens_per_step": 422.0
+    },
+    "D1_answer_correctness": {
+      "exact_match": false,
+      "near_match": false,
+      "token_recall": 0.0,
+      "seq_similarity": 0.167,
+      "score": 0.0
+    },
+    "D5_trajectory_efficiency": {
+      "total_steps": 1,
+      "redundancy_rate": 0.0,
+      "tokens_per_step": 422.0,
+      "loop_detected": false,
+      "loop_penalty_applied": 0.0,
+      "efficiency_score": 0.842,
+      "total_tokens": 422,
+      "tokens_per_correct_answer": Infinity
+    }
+  },
+  {
+    "question_id": "2hop__701895_752697",
+    "question": "What administrative territorial entity is the owner of Ciudad Deportiva located?",
+    "ground_truth": "Tamaulipas",
+    "num_hops": 2,
+    "predicted_answer": "Based on the search results, I was unable to find any information about Ciudad Deportiva's administrative territorial entity. However, I can suggest some possible sources where you may be able to find this information:\n\n1. Wikipedia: You can try searching for Ciudad Deportiva on Wikipedia and see if it has an article with information about its administrative territorial entity.\n2. Official website: You can try visiting the official website of Ciudad Deportiva or its parent organization to see if they have any information about its administrative territorial entity.\n3. Government websites: You can try searching for government websites related to the country where Ciudad Deportiva is located and see if they have any information about its administrative territorial entity.\n\nI hope this helps! Let me know if you need further assistance.",
+    "success": true,
+    "total_wall_latency_ms": 18861.0,
+    "trajectory": [
+      {
+        "step_id": 1,
+        "query": "administrative territorial entity owning Ciudad Deportiva",
+        "num_docs_retrieved": 5,
+        "retrieved_content": [
+          "A Nigerian State is a federated political entity, which shares sovereignty with the Federal Government of Nigeria, There are 36 States in Nigeria, which are bound together by a federal agreement. There is also a territory called the Federal Capital Territory (FCT), which is not a state, but a territory, under the direct control of the Federal Government. The States are further divided into a total of 774 Local Government Areas. Under the Nigerian Constitution, states have the power to ratify constitutional amendments.",
+          "Pangi Territory is an administrative area in Maniema Province of the Democratic Republic of the Congo. The headquarters is the town of Pangi.",
+          "Each state and major mainland territory has its own parliament \u2014 unicameral in the Northern Territory, the ACT and Queensland, and bicameral in the other states. The states are sovereign entities, although subject to certain powers of the Commonwealth as defined by the Constitution. The lower houses are known as the Legislative Assembly (the House of Assembly in South Australia and Tasmania); the upper houses are known as the Legislative Council. The head of the government in each state is the Premier and in each territory the Chief Minister. The Queen is represented in each state by a governor; and in the Northern Territory, the Administrator. In the Commonwealth, the Queen's representative is the Governor-General.The Commonwealth Parliament also directly administers the following external territories: Ashmore and Cartier Islands; Australian Antarctic Territory; Christmas Island; Cocos (Keeling) Islands; Coral Sea Islands; Heard Island and McDonald Islands; and Jervis Bay Territory, a naval base and sea port for the national capital in land that was formerly part of New South Wales. The external territory of Norfolk Island previously exercised considerable autonomy under the Norfolk Island Act 1979 through its own legislative assembly and an Administrator to represent the Queen. In 2015, the Commonwealth Parliament abolished self-government, integrating Norfolk Island into the Australian tax and welfare systems and replacing its legislative assembly with a council. Macquarie Island is administered by Tasmania, and Lord Howe Island by New South Wales.",
+          "Minsk Region or Minsk Voblas\u0107 or Minsk Oblast (, \"Minskaja vob\u0142as\u0107\" ; , \"Minskaja oblastj\") is one of the regions of Belarus. Its administrative center is Minsk, although it is a separate administrative territorial entity of Belarus. As of 2011, the region's population is 1,411,500.",
+          "The AFL currently runs as under the single-entity model, with the league owning the rights to the teams, players, and coaches. The single-entity model was adopted in 2010 when the league emerged from bankruptcy. Prior to that, the league followed the franchise model more common in North American professional sports leagues; each team essentially operated as its own business and the league itself was a separate entity which in exchange for franchise fees paid by the team owners provided rules, officials, scheduling and the other elements of organizational structure. A pool of money is allotted to teams to aid in travel costs."
+        ],
+        "precision_at_k": 0.0,
+        "is_loop_step": false,
+        "tokens_estimate": 803,
+        "latency_ms": 18.6
+      },
+      {
+        "step_id": 2,
+        "query": "administrative territorial entity owning Ciudad Deportiva",
+        "num_docs_retrieved": 5,
+        "retrieved_content": [
+          "A Nigerian State is a federated political entity, which shares sovereignty with the Federal Government of Nigeria, There are 36 States in Nigeria, which are bound together by a federal agreement. There is also a territory called the Federal Capital Territory (FCT), which is not a state, but a territory, under the direct control of the Federal Government. The States are further divided into a total of 774 Local Government Areas. Under the Nigerian Constitution, states have the power to ratify constitutional amendments.",
+          "Pangi Territory is an administrative area in Maniema Province of the Democratic Republic of the Congo. The headquarters is the town of Pangi.",
+          "Each state and major mainland territory has its own parliament \u2014 unicameral in the Northern Territory, the ACT and Queensland, and bicameral in the other states. The states are sovereign entities, although subject to certain powers of the Commonwealth as defined by the Constitution. The lower houses are known as the Legislative Assembly (the House of Assembly in South Australia and Tasmania); the upper houses are known as the Legislative Council. The head of the government in each state is the Premier and in each territory the Chief Minister. The Queen is represented in each state by a governor; and in the Northern Territory, the Administrator. In the Commonwealth, the Queen's representative is the Governor-General.The Commonwealth Parliament also directly administers the following external territories: Ashmore and Cartier Islands; Australian Antarctic Territory; Christmas Island; Cocos (Keeling) Islands; Coral Sea Islands; Heard Island and McDonald Islands; and Jervis Bay Territory, a naval base and sea port for the national capital in land that was formerly part of New South Wales. The external territory of Norfolk Island previously exercised considerable autonomy under the Norfolk Island Act 1979 through its own legislative assembly and an Administrator to represent the Queen. In 2015, the Commonwealth Parliament abolished self-government, integrating Norfolk Island into the Australian tax and welfare systems and replacing its legislative assembly with a council. Macquarie Island is administered by Tasmania, and Lord Howe Island by New South Wales.",
+          "Minsk Region or Minsk Voblas\u0107 or Minsk Oblast (, \"Minskaja vob\u0142as\u0107\" ; , \"Minskaja oblastj\") is one of the regions of Belarus. Its administrative center is Minsk, although it is a separate administrative territorial entity of Belarus. As of 2011, the region's population is 1,411,500.",
+          "The AFL currently runs as under the single-entity model, with the league owning the rights to the teams, players, and coaches. The single-entity model was adopted in 2010 when the league emerged from bankruptcy. Prior to that, the league followed the franchise model more common in North American professional sports leagues; each team essentially operated as its own business and the league itself was a separate entity which in exchange for franchise fees paid by the team owners provided rules, officials, scheduling and the other elements of organizational structure. A pool of money is allotted to teams to aid in travel costs."
+        ],
+        "precision_at_k": 0.0,
+        "is_loop_step": true,
+        "tokens_estimate": 803,
+        "latency_ms": 15.4
+      }
+    ],
+    "trajectory_summary": {
+      "total_steps": 2,
+      "unique_queries": [
+        "administrative territorial entity owning Ciudad Deportiva"
+      ],
+      "redundant_queries": 1,
+      "redundancy_rate": 0.5,
+      "loop_detected": true,
+      "loop_steps": 1,
+      "avg_step_precision_at_k": 0.0,
+      "total_tokens": 1606,
+      "total_latency_ms": 34.0,
+      "tokens_per_step": 803.0
+    },
+    "D1_answer_correctness": {
+      "exact_match": false,
+      "near_match": false,
+      "token_recall": 0.0,
+      "seq_similarity": 0.25,
+      "score": 0.0
+    },
+    "D5_trajectory_efficiency": {
+      "total_steps": 2,
+      "redundancy_rate": 0.5,
+      "tokens_per_step": 803.0,
+      "loop_detected": true,
+      "loop_penalty_applied": 0.3,
+      "efficiency_score": 0.15,
+      "total_tokens": 1606,
+      "tokens_per_correct_answer": Infinity
+    }
+  },
+  {
+    "question_id": "2hop__259228_793698",
+    "question": "Where is Ulrich Walter's employer headquartered?",
+    "ground_truth": "Cologne",
+    "num_hops": 2,
+    "predicted_answer": "Based on the search results, I was unable to find information about Ulrich Walter's employer. However, one of the search results mentioned a person named Ulrich Walter who is an astronaut and participated in the Mir space station program. Unfortunately, I couldn't find any information about his current or past employer.\n\nHowever, if you are referring to another person with the same name, please provide more context or information so that I can assist you better.",
+    "success": true,
+    "total_wall_latency_ms": 9613.6,
+    "trajectory": [
+      {
+        "step_id": 1,
+        "query": "Ulrich Walter employer headquarters",
+        "num_docs_retrieved": 5,
+        "retrieved_content": [
+          "GE is a multinational conglomerate headquartered in Fairfield, Connecticut. Its main offices are located at 30 Rockefeller Plaza at Rockefeller Center in New York City, known now as the Comcast Building. It was formerly known as the GE Building for the prominent GE logo on the roof; NBC's headquarters and main studios are also located in the building. Through its RCA subsidiary, it has been associated with the center since its construction in the 1930s. GE moved its corporate headquarters from the GE Building on Lexington Avenue to Fairfield in 1974.",
+          "The John Deere World Headquarters is a complex of four buildings located on 1,400 acres (5.7\u00a0km\u00b2) of land at One John Deere Place, Moline, Illinois, United States. The complex serves as corporate headquarters for John Deere.",
+          "The Confederation of Finnish Industries (EK, , ) is the largest employers' association in Finland. It was formed at the beginning of 2005 when the two employers' associations \"Palveluty\u00f6nantajat\" (Employers of the Service Sector) and \"Teollisuuden ja Ty\u00f6nantajain Keskusliitto\" (Union of Industries and Employers) merged. EK's member companies collectively contribute over 70% of Finland's GDP, and over 95% of Finland's exports. It has considerable negotiating power, since Finland has universal validity of collective labour agreements, and often a national income policy agreement is reached.",
+          "Other Fortune 500 companies, while not headquartered in the area, do have a major presence. These include SunTrust Bank (based in Atlanta), Capital One Financial Corporation (officially based in McLean, Virginia, but founded in Richmond with its operations center and most employees in the Richmond area), and the medical and pharmaceutical giant McKesson (based in San Francisco). Capital One and Altria company's Philip Morris USA are two of the largest private Richmond-area employers. DuPont maintains a production facility in South Richmond known as the Spruance Plant. UPS Freight, the less-than-truckload division of UPS and formerly known as Overnite Transportation, has its corporate headquarters in Richmond.",
+          "Cork City is at the heart of industry in the south of Ireland. Its main area of industry is pharmaceuticals, with Pfizer Inc. and Swiss company Novartis being big employers in the region. The most famous product of the Cork pharmaceutical industry is Viagra. Cork is also the European headquarters of Apple Inc. where over 3,000 staff are involved in manufacturing, R&D and customer support. Logitech and EMC Corporation are also important IT employers in the area. Three hospitals are also among the top ten employers in the city (see table below)."
+        ],
+        "precision_at_k": 0.0,
+        "is_loop_step": false,
+        "tokens_estimate": 669,
+        "latency_ms": 15.2
+      }
+    ],
+    "trajectory_summary": {
+      "total_steps": 1,
+      "unique_queries": [
+        "Ulrich Walter employer headquarters"
+      ],
+      "redundant_queries": 0,
+      "redundancy_rate": 0.0,
+      "loop_detected": false,
+      "loop_steps": 0,
+      "avg_step_precision_at_k": 0.0,
+      "total_tokens": 669,
+      "total_latency_ms": 15.2,
+      "tokens_per_step": 669.0
+    },
+    "D1_answer_correctness": {
+      "exact_match": false,
+      "near_match": false,
+      "token_recall": 0.0,
+      "seq_similarity": 0.071,
+      "score": 0.0
+    },
+    "D5_trajectory_efficiency": {
+      "total_steps": 1,
+      "redundancy_rate": 0.0,
+      "tokens_per_step": 669.0,
+      "loop_detected": false,
+      "loop_penalty_applied": 0.0,
+      "efficiency_score": 0.749,
+      "total_tokens": 669,
+      "tokens_per_correct_answer": Infinity
+    }
+  },
+  {
+    "question_id": "2hop__481349_302087",
+    "question": "Which company owns the manufacturer of Learjet 60?",
+    "ground_truth": "Bombardier Inc.",
+    "num_hops": 2,
+    "predicted_answer": "Based on the tool call output, the company that owns the manufacturer of Learjet 60 is Bombardier Aerospace.",
+    "success": true,
+    "total_wall_latency_ms": 5735.4,
+    "trajectory": [
+      {
+        "step_id": 1,
+        "query": "Learjet 60 manufacturer owner",
+        "num_docs_retrieved": 5,
+        "retrieved_content": [
+          "The Learjet 60 is a mid-size cabin, medium-range business jet aircraft manufactured by Bombardier Aerospace in Wichita, Kansas. Powered by two Pratt & Whitney Canada PW305A engines, it has a range (with 4 passengers and 2 crew) of with NBAA reserves, ISA. In July 2012 Bombardier Aerospace announced a temporary \"production pause\" of the latest variant Learjet 60XR to begin in the fourth quarter of 2012.",
+          "Datsun (, ) is an automobile brand owned by Nissan. Datsun's original production run began in 1931. From 1958 to 1986, only vehicles exported by Nissan were identified as Datsun. By 1986 Nissan had phased out the Datsun name, but re-launched it in June 2013 as the brand for low-cost vehicles manufactured for emerging markets.",
+          "Aerojet was an American rocket and missile propulsion manufacturer based primarily in Rancho Cordova, California, with divisions in Redmond, Washington, Orange and Gainesville in Virginia, and Camden, Arkansas. Aerojet was owned by GenCorp. In 2013, Aerojet was merged by GenCorp with the former Pratt & Whitney Rocketdyne to form Aerojet Rocketdyne.",
+          "Commer was a British manufacturer of commercial vehicles from 1905 until 1979. Commer vehicles included car-derived vans, light vans, medium to heavy commercial trucks, military vehicles and buses. The company also designed and built some of its own diesel engines for its heavy commercial vehicles.",
+          "In the 60 seasons the Championship has been awarded, only nine different manufacturers have won it. Chevrolet has been the most successful, with 39 titles. The second most successful is Ford, with 15 titles."
+        ],
+        "precision_at_k": 0.2,
+        "is_loop_step": false,
+        "tokens_estimate": 404,
+        "latency_ms": 14.5
+      }
+    ],
+    "trajectory_summary": {
+      "total_steps": 1,
+      "unique_queries": [
+        "Learjet 60 manufacturer owner"
+      ],
+      "redundant_queries": 0,
+      "redundancy_rate": 0.0,
+      "loop_detected": false,
+      "loop_steps": 0,
+      "avg_step_precision_at_k": 0.2,
+      "total_tokens": 404,
+      "total_latency_ms": 14.5,
+      "tokens_per_step": 404.0
+    },
+    "D1_answer_correctness": {
+      "exact_match": false,
+      "near_match": false,
+      "token_recall": 0.5,
+      "seq_similarity": 0.167,
+      "score": 0.077
+    },
+    "D5_trajectory_efficiency": {
+      "total_steps": 1,
+      "redundancy_rate": 0.0,
+      "tokens_per_step": 404.0,
+      "loop_detected": false,
+      "loop_penalty_applied": 0.0,
+      "efficiency_score": 0.849,
+      "total_tokens": 404,
+      "tokens_per_correct_answer": Infinity
+    }
+  }
+]

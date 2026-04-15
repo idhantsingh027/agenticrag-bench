@@ -1,0 +1,473 @@
+[
+  {
+    "question_id": "2hop__460946_294723",
+    "question": "Who is the spouse of the Green performer?",
+    "ground_truth": "Miquette Giraudy",
+    "predicted_answer": "The Green performer you are referring to is likely CeeLo Green or Shrek's friend Donkey's love interest Puss in Boots' rival, but most likely it is the singer CeeLo Green. \n\nCeeLo Green was born Thomas DeCarlo Callaway on May 30, 1975, in Atlanta, Georgia. He is an American singer, songwriter, rapper, record producer, and actor.\n\nHe has released several successful albums, including \"CeeLo's Magic Moment\" (2002), \"The Lady Killer\" (2010), and \"Heart Blanche\" (2016).",
+    "answer_correct": false,
+    "success": true,
+    "trajectory": [
+      {
+        "step_id": 1,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 200.0
+      },
+      {
+        "step_id": 2,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 197.1
+      },
+      {
+        "step_id": 3,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 199.2
+      },
+      {
+        "step_id": 4,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 197.7
+      },
+      {
+        "step_id": 5,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 199.5
+      },
+      {
+        "step_id": 6,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 207.5
+      },
+      {
+        "step_id": 7,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 200.3
+      },
+      {
+        "step_id": 8,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 204.3
+      },
+      {
+        "step_id": 9,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 202.7
+      },
+      {
+        "step_id": 10,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 203.9
+      },
+      {
+        "step_id": 11,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 198.4
+      },
+      {
+        "step_id": 12,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 197.3
+      },
+      {
+        "step_id": 13,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 197.7
+      },
+      {
+        "step_id": 14,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 215.3
+      },
+      {
+        "step_id": 15,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 212.4
+      },
+      {
+        "step_id": 16,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 273.2
+      },
+      {
+        "step_id": 17,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 213.7
+      },
+      {
+        "step_id": 18,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 207.9
+      },
+      {
+        "step_id": 19,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 202.8
+      },
+      {
+        "step_id": 20,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 204.0
+      },
+      {
+        "step_id": 21,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 204.7
+      },
+      {
+        "step_id": 22,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 204.7
+      },
+      {
+        "step_id": 23,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 221.3
+      },
+      {
+        "step_id": 24,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 221.8
+      },
+      {
+        "step_id": 25,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 231.3
+      },
+      {
+        "step_id": 26,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 231.6
+      },
+      {
+        "step_id": 27,
+        "type": "retrieval",
+        "query": "Green performer spouse",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "The Godfather (1972) was directed by Francis Ford Coppola. It won the Academy Award for Best Picture at the 45th Academy Awards ceremony held in March 1973.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 127,
+        "latency_ms": 232.1
+      }
+    ],
+    "total_retrieval_steps": 27,
+    "unique_queries": [
+      "Green performer spouse"
+    ],
+    "redundant_queries": 26,
+    "total_tokens_estimate": 3429,
+    "total_latency_ms": 400424.8,
+    "tokens_per_retrieval_step": 127.0
+  },
+  {
+    "question_id": "2hop__252311_366220",
+    "question": "Who founded the company that distributed the film UHF?",
+    "ground_truth": "Mike Medavoy",
+    "predicted_answer": "The answer to your question about who founded the company that distributed the film UHF is: Troma Entertainment, which was founded by Lloyd Kaufman and Michael Herz in 1974.",
+    "answer_correct": false,
+    "success": true,
+    "trajectory": [
+      {
+        "step_id": 1,
+        "type": "retrieval",
+        "query": "UHF film distributor founder",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Francis Ford Coppola is an American film director, producer, and screenwriter. He was born on April 7, 1939, in Detroit, Michigan, United States.",
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 126,
+        "latency_ms": 322.8
+      },
+      {
+        "step_id": 2,
+        "type": "retrieval",
+        "query": "UHF film distributor founder",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Francis Ford Coppola is an American film director, producer, and screenwriter. He was born on April 7, 1939, in Detroit, Michigan, United States.",
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "William Friedkin was an American film director and producer. He was born on August 29, 1935, in Chicago, Illinois. He directed The French Connection and The Exorcist."
+        ],
+        "tokens_estimate": 126,
+        "latency_ms": 323.6
+      },
+      {
+        "step_id": 3,
+        "type": "retrieval",
+        "query": "UHF distributor",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "The Nobel Prize in Physics 2017 was awarded to Rainer Weiss, Barry C. Barish, and Kip S. Thorne for decisive contributions to the LIGO detector and the observation of gravitational waves.",
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "Brooklyn is a borough of New York City, located on the western end of Long Island."
+        ],
+        "tokens_estimate": 112,
+        "latency_ms": 236.1
+      }
+    ],
+    "total_retrieval_steps": 3,
+    "unique_queries": [
+      "UHF film distributor founder",
+      "UHF distributor"
+    ],
+    "redundant_queries": 1,
+    "total_tokens_estimate": 364,
+    "total_latency_ms": 15131.0,
+    "tokens_per_retrieval_step": 121.3
+  },
+  {
+    "question_id": "2hop__701895_752697",
+    "question": "What administrative territorial entity is the owner of Ciudad Deportiva located?",
+    "ground_truth": "Tamaulipas",
+    "predicted_answer": "The output indicates that Ciudad Deportiva is a sports complex located in Madrid, Spain. Therefore, the administrative territorial entity that owns Ciudad Deportiva is Madrid.",
+    "answer_correct": false,
+    "success": true,
+    "trajectory": [
+      {
+        "step_id": 1,
+        "type": "retrieval",
+        "query": "administrative territorial entity that owns Ciudad Deportiva",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Francis Ford Coppola is an American film director, producer, and screenwriter. He was born on April 7, 1939, in Detroit, Michigan, United States.",
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "Chicago is the largest city in the state of Illinois, United States. It is located on the southwestern shore of Lake Michigan."
+        ],
+        "tokens_estimate": 124,
+        "latency_ms": 295.3
+      },
+      {
+        "step_id": 2,
+        "type": "retrieval",
+        "query": "administrative territorial entity that owns Ciudad Deportiva",
+        "num_docs_retrieved": 3,
+        "retrieved_content": [
+          "Francis Ford Coppola is an American film director, producer, and screenwriter. He was born on April 7, 1939, in Detroit, Michigan, United States.",
+          "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945 and again from 1951 to 1955. He was born in Blenheim Palace, Oxfordshire, England.",
+          "Chicago is the largest city in the state of Illinois, United States. It is located on the southwestern shore of Lake Michigan."
+        ],
+        "tokens_estimate": 124,
+        "latency_ms": 283.1
+      }
+    ],
+    "total_retrieval_steps": 2,
+    "unique_queries": [
+      "administrative territorial entity that owns Ciudad Deportiva"
+    ],
+    "redundant_queries": 1,
+    "total_tokens_estimate": 248,
+    "total_latency_ms": 10568.5,
+    "tokens_per_retrieval_step": 124.0
+  }
+]

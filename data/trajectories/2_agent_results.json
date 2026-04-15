@@ -1,0 +1,232 @@
+[
+  {
+    "question_id": "2hop__460946_294723",
+    "question": "Who is the spouse of the Green performer?",
+    "ground_truth": "Miquette Giraudy",
+    "num_hops": 2,
+    "predicted_answer": "Step 1 result: \n{\"name\": \"search_knowledge_base\", \"parameters\": {\"query\": \"who is the Green performer?\"}}\n\nStep 2 result: \n{\"name\": \"search_knowledge_base\", \"parameters\": {\"query\": \"spouse of Steve Hillage\"}} \n\nFinal answer: \n{\"name\": \"search_knowledge_base\", \"parameters\": {\"query\": \"Miquette Giraudy spouse\"}}",
+    "success": true,
+    "total_wall_latency_ms": 10849.5,
+    "trajectory": [],
+    "trajectory_summary": {},
+    "D1_answer_correctness": {
+      "exact_match": true,
+      "near_match": true,
+      "token_recall": 1.0,
+      "seq_similarity": 0.156,
+      "score": 1.0
+    },
+    "D5_trajectory_efficiency": {
+      "total_steps": 0,
+      "redundancy_rate": 0,
+      "tokens_per_step": 0,
+      "loop_detected": false,
+      "loop_penalty_applied": 0.0,
+      "efficiency_score": 1.0,
+      "total_tokens": 0,
+      "tokens_per_correct_answer": 0
+    }
+  },
+  {
+    "question_id": "2hop__252311_366220",
+    "question": "Who founded the company that distributed the film UHF?",
+    "ground_truth": "Mike Medavoy",
+    "num_hops": 2,
+    "predicted_answer": "Step 1 result: \n{\"name\": \"search_knowledge_base\", \"parameters\": {\"query\": \"company that distributed the film UHF\"}} \n\nStep 2 result: \n{\"name\": \"search_knowledge_base\", \"parameters\": {\"query\": \"founder of Republic Pictures\"}} \n\nFinal answer: \n{\"name\": \"search_knowledge_base\", \"parameters\": {\"query\": \"Republic Pictures founder\"}}",
+    "success": true,
+    "total_wall_latency_ms": 4493.1,
+    "trajectory": [],
+    "trajectory_summary": {},
+    "D1_answer_correctness": {
+      "exact_match": false,
+      "near_match": false,
+      "token_recall": 0.0,
+      "seq_similarity": 0.25,
+      "score": 0.0
+    },
+    "D5_trajectory_efficiency": {
+      "total_steps": 0,
+      "redundancy_rate": 0,
+      "tokens_per_step": 0,
+      "loop_detected": false,
+      "loop_penalty_applied": 0.0,
+      "efficiency_score": 1.0,
+      "total_tokens": 0,
+      "tokens_per_correct_answer": Infinity
+    }
+  },
+  {
+    "question_id": "2hop__701895_752697",
+    "question": "What administrative territorial entity is the owner of Ciudad Deportiva located?",
+    "ground_truth": "Tamaulipas",
+    "num_hops": 2,
+    "predicted_answer": "Step 1 result: The possible locations for Ciudad Deportiva are not specified in the search results.\n\nHowever, I can try to find more information about Ciudad Deportiva.\n\n{\"name\": \"search_knowledge_base\", \"parameters\": {\"query\":\"Ciudad Deportiva\"}}",
+    "success": true,
+    "total_wall_latency_ms": 8170.3,
+    "trajectory": [
+      {
+        "step_id": 1,
+        "query": "administrative territorial entity that owns Ciudad Deportiva",
+        "num_docs_retrieved": 5,
+        "retrieved_content": [
+          "A Nigerian State is a federated political entity, which shares sovereignty with the Federal Government of Nigeria, There are 36 States in Nigeria, which are bound together by a federal agreement. There is also a territory called the Federal Capital Territory (FCT), which is not a state, but a territory, under the direct control of the Federal Government. The States are further divided into a total of 774 Local Government Areas. Under the Nigerian Constitution, states have the power to ratify constitutional amendments.",
+          "Pangi Territory is an administrative area in Maniema Province of the Democratic Republic of the Congo. The headquarters is the town of Pangi.",
+          "Minsk Region or Minsk Voblas\u0107 or Minsk Oblast (, \"Minskaja vob\u0142as\u0107\" ; , \"Minskaja oblastj\") is one of the regions of Belarus. Its administrative center is Minsk, although it is a separate administrative territorial entity of Belarus. As of 2011, the region's population is 1,411,500.",
+          "Each state and major mainland territory has its own parliament \u2014 unicameral in the Northern Territory, the ACT and Queensland, and bicameral in the other states. The states are sovereign entities, although subject to certain powers of the Commonwealth as defined by the Constitution. The lower houses are known as the Legislative Assembly (the House of Assembly in South Australia and Tasmania); the upper houses are known as the Legislative Council. The head of the government in each state is the Premier and in each territory the Chief Minister. The Queen is represented in each state by a governor; and in the Northern Territory, the Administrator. In the Commonwealth, the Queen's representative is the Governor-General.The Commonwealth Parliament also directly administers the following external territories: Ashmore and Cartier Islands; Australian Antarctic Territory; Christmas Island; Cocos (Keeling) Islands; Coral Sea Islands; Heard Island and McDonald Islands; and Jervis Bay Territory, a naval base and sea port for the national capital in land that was formerly part of New South Wales. The external territory of Norfolk Island previously exercised considerable autonomy under the Norfolk Island Act 1979 through its own legislative assembly and an Administrator to represent the Queen. In 2015, the Commonwealth Parliament abolished self-government, integrating Norfolk Island into the Australian tax and welfare systems and replacing its legislative assembly with a council. Macquarie Island is administered by Tasmania, and Lord Howe Island by New South Wales.",
+          "Tumaraa is a commune of French Polynesia, an overseas territory of France in the Pacific Ocean. The commune of Tumaraa is located on the island of Raiatea, in the administrative subdivision of the Leeward Islands, themselves part of the Society Islands. At the 2017 census it had a population of 3,721, making it the least populous commune on Raiatea."
+        ],
+        "precision_at_k": 0.0,
+        "is_loop_step": false,
+        "tokens_estimate": 733,
+        "latency_ms": 29.3
+      }
+    ],
+    "trajectory_summary": {
+      "total_steps": 1,
+      "unique_queries": [
+        "administrative territorial entity that owns Ciudad Deportiva"
+      ],
+      "redundant_queries": 0,
+      "redundancy_rate": 0.0,
+      "loop_detected": false,
+      "loop_steps": 0,
+      "avg_step_precision_at_k": 0.0,
+      "total_tokens": 733,
+      "total_latency_ms": 29.3,
+      "tokens_per_step": 733.0
+    },
+    "D1_answer_correctness": {
+      "exact_match": false,
+      "near_match": false,
+      "token_recall": 0.0,
+      "seq_similarity": 0.2,
+      "score": 0.0
+    },
+    "D5_trajectory_efficiency": {
+      "total_steps": 1,
+      "redundancy_rate": 0.0,
+      "tokens_per_step": 733.0,
+      "loop_detected": false,
+      "loop_penalty_applied": 0.0,
+      "efficiency_score": 0.725,
+      "total_tokens": 733,
+      "tokens_per_correct_answer": Infinity
+    }
+  },
+  {
+    "question_id": "2hop__259228_793698",
+    "question": "Where is Ulrich Walter's employer headquartered?",
+    "ground_truth": "Cologne",
+    "num_hops": 2,
+    "predicted_answer": "Step 1 result: Ulrich Walter is a German astronaut.\n\nStep 2 result: The European Space Agency (ESA) is headquartered in Paris, France.\n\nFinal answer: The European Space Agency (ESA) is headquartered in Paris, France.",
+    "success": true,
+    "total_wall_latency_ms": 7677.9,
+    "trajectory": [
+      {
+        "step_id": 1,
+        "query": "Ulrich Walter employer headquarters",
+        "num_docs_retrieved": 5,
+        "retrieved_content": [
+          "GE is a multinational conglomerate headquartered in Fairfield, Connecticut. Its main offices are located at 30 Rockefeller Plaza at Rockefeller Center in New York City, known now as the Comcast Building. It was formerly known as the GE Building for the prominent GE logo on the roof; NBC's headquarters and main studios are also located in the building. Through its RCA subsidiary, it has been associated with the center since its construction in the 1930s. GE moved its corporate headquarters from the GE Building on Lexington Avenue to Fairfield in 1974.",
+          "The John Deere World Headquarters is a complex of four buildings located on 1,400 acres (5.7\u00a0km\u00b2) of land at One John Deere Place, Moline, Illinois, United States. The complex serves as corporate headquarters for John Deere.",
+          "The Confederation of Finnish Industries (EK, , ) is the largest employers' association in Finland. It was formed at the beginning of 2005 when the two employers' associations \"Palveluty\u00f6nantajat\" (Employers of the Service Sector) and \"Teollisuuden ja Ty\u00f6nantajain Keskusliitto\" (Union of Industries and Employers) merged. EK's member companies collectively contribute over 70% of Finland's GDP, and over 95% of Finland's exports. It has considerable negotiating power, since Finland has universal validity of collective labour agreements, and often a national income policy agreement is reached.",
+          "Other Fortune 500 companies, while not headquartered in the area, do have a major presence. These include SunTrust Bank (based in Atlanta), Capital One Financial Corporation (officially based in McLean, Virginia, but founded in Richmond with its operations center and most employees in the Richmond area), and the medical and pharmaceutical giant McKesson (based in San Francisco). Capital One and Altria company's Philip Morris USA are two of the largest private Richmond-area employers. DuPont maintains a production facility in South Richmond known as the Spruance Plant. UPS Freight, the less-than-truckload division of UPS and formerly known as Overnite Transportation, has its corporate headquarters in Richmond.",
+          "Cork City is at the heart of industry in the south of Ireland. Its main area of industry is pharmaceuticals, with Pfizer Inc. and Swiss company Novartis being big employers in the region. The most famous product of the Cork pharmaceutical industry is Viagra. Cork is also the European headquarters of Apple Inc. where over 3,000 staff are involved in manufacturing, R&D and customer support. Logitech and EMC Corporation are also important IT employers in the area. Three hospitals are also among the top ten employers in the city (see table below)."
+        ],
+        "precision_at_k": 0.0,
+        "is_loop_step": false,
+        "tokens_estimate": 669,
+        "latency_ms": 18.5
+      }
+    ],
+    "trajectory_summary": {
+      "total_steps": 1,
+      "unique_queries": [
+        "Ulrich Walter employer headquarters"
+      ],
+      "redundant_queries": 0,
+      "redundancy_rate": 0.0,
+      "loop_detected": false,
+      "loop_steps": 0,
+      "avg_step_precision_at_k": 0.0,
+      "total_tokens": 669,
+      "total_latency_ms": 18.5,
+      "tokens_per_step": 669.0
+    },
+    "D1_answer_correctness": {
+      "exact_match": false,
+      "near_match": false,
+      "token_recall": 0.0,
+      "seq_similarity": 0.071,
+      "score": 0.0
+    },
+    "D5_trajectory_efficiency": {
+      "total_steps": 1,
+      "redundancy_rate": 0.0,
+      "tokens_per_step": 669.0,
+      "loop_detected": false,
+      "loop_penalty_applied": 0.0,
+      "efficiency_score": 0.749,
+      "total_tokens": 669,
+      "tokens_per_correct_answer": Infinity
+    }
+  },
+  {
+    "question_id": "2hop__481349_302087",
+    "question": "Which company owns the manufacturer of Learjet 60?",
+    "ground_truth": "Bombardier Inc.",
+    "num_hops": 2,
+    "predicted_answer": "Step 1 result: Bombardier Aerospace manufactures the Learjet 60.\n\nStep 2 result: Bombardier Aerospace was owned by Bombardier Inc.\n\nFinal answer: Bombardier Inc.",
+    "success": true,
+    "total_wall_latency_ms": 6381.7,
+    "trajectory": [
+      {
+        "step_id": 1,
+        "query": "Learjet 60 manufacturer owner",
+        "num_docs_retrieved": 5,
+        "retrieved_content": [
+          "The Learjet 60 is a mid-size cabin, medium-range business jet aircraft manufactured by Bombardier Aerospace in Wichita, Kansas. Powered by two Pratt & Whitney Canada PW305A engines, it has a range (with 4 passengers and 2 crew) of with NBAA reserves, ISA. In July 2012 Bombardier Aerospace announced a temporary \"production pause\" of the latest variant Learjet 60XR to begin in the fourth quarter of 2012.",
+          "Datsun (, ) is an automobile brand owned by Nissan. Datsun's original production run began in 1931. From 1958 to 1986, only vehicles exported by Nissan were identified as Datsun. By 1986 Nissan had phased out the Datsun name, but re-launched it in June 2013 as the brand for low-cost vehicles manufactured for emerging markets.",
+          "Aerojet was an American rocket and missile propulsion manufacturer based primarily in Rancho Cordova, California, with divisions in Redmond, Washington, Orange and Gainesville in Virginia, and Camden, Arkansas. Aerojet was owned by GenCorp. In 2013, Aerojet was merged by GenCorp with the former Pratt & Whitney Rocketdyne to form Aerojet Rocketdyne.",
+          "Commer was a British manufacturer of commercial vehicles from 1905 until 1979. Commer vehicles included car-derived vans, light vans, medium to heavy commercial trucks, military vehicles and buses. The company also designed and built some of its own diesel engines for its heavy commercial vehicles.",
+          "In the 60 seasons the Championship has been awarded, only nine different manufacturers have won it. Chevrolet has been the most successful, with 39 titles. The second most successful is Ford, with 15 titles."
+        ],
+        "precision_at_k": 0.2,
+        "is_loop_step": false,
+        "tokens_estimate": 404,
+        "latency_ms": 16.3
+      }
+    ],
+    "trajectory_summary": {
+      "total_steps": 1,
+      "unique_queries": [
+        "Learjet 60 manufacturer owner"
+      ],
+      "redundant_queries": 0,
+      "redundancy_rate": 0.0,
+      "loop_detected": false,
+      "loop_steps": 0,
+      "avg_step_precision_at_k": 0.2,
+      "total_tokens": 404,
+      "total_latency_ms": 16.3,
+      "tokens_per_step": 404.0
+    },
+    "D1_answer_correctness": {
+      "exact_match": true,
+      "near_match": true,
+      "token_recall": 1.0,
+      "seq_similarity": 0.433,
+      "score": 1.0
+    },
+    "D5_trajectory_efficiency": {
+      "total_steps": 1,
+      "redundancy_rate": 0.0,
+      "tokens_per_step": 404.0,
+      "loop_detected": false,
+      "loop_penalty_applied": 0.0,
+      "efficiency_score": 0.849,
+      "total_tokens": 404,
+      "tokens_per_correct_answer": 404
+    }
+  }
+]
