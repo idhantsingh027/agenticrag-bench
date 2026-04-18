@@ -55,9 +55,12 @@ AgenticRAG-Bench is a research benchmark that evaluates **agentic RAG systems** 
 
 ## Results so far
 
-| Week | Questions | System | D1 Accuracy | D5 Redundancy | Key finding |
-|---|---|---|---|---|---|
-| 1 | 3 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | 0/3 = 0% | 88% wasted | RAGAS answer_relevancy 0.927 while accuracy 0%. Agent entered 27-step retrieval loop on Q1. |
+| Week | Questions | System | Embeddings | Retrieval k | System Prompt | D1 Accuracy | D5 Efficiency | Key finding |
+|---|---|---|---|---|---|---|---|---|
+| 1 | 3 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | llama3.1:8b | k=3 | None | 0/3 = 0% | 88% wasted | RAGAS answer_relevancy = 0.927 despite 0% accuracy. Agent entered a 27-step retrieval loop → exposes evaluation blind spot. |
+| 2a | 5 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | k=3 | None | 1/5 = 20% | 0.763 | Real KB + stronger embeddings eliminate loops, but reveal early stopping and weak multi-hop planning. |
+| 2b | 5 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | k=5 | None | 0/5 = 0% | 0.692 | Increasing k does not improve performance. Agent still performs single-step retrieval → failure is not recall but planning. |
+| 2c | 5 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | k=5 | Multi-step prompt + tool constraints | 2/5 = 40% | 0.809 | Enforcing multi-step behavior improves accuracy. Remaining errors stem from reasoning instability (entity drift) and KB gaps, not retrieval. |
 
 ---
 
