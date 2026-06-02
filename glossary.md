@@ -1,0 +1,373 @@
+# AgenticRAG-Bench — Glossary
+
+> This file explains every key term, concept, and variable in the project in simple language with examples. Read this before going through the notebooks.
+
+---
+
+## The one-line summary
+
+We built a way to properly grade an AI that searches documents to answer questions — not just "did it get the answer right?" but "did it search sensibly, find the right things, and not waste effort?"
+
+---
+
+## Part 1 — What is the project about?
+
+### The core problem
+
+When you ask an AI to answer a question using a set of documents, the standard way to grade it (called RAGAS) only looks at the final answer. It asks: "Is the answer on-topic? Is it supported by what was retrieved?"
+
+The problem is that RAGAS gives high scores even when the AI is behaving terribly. In our Week 1 experiment:
+
+- The AI searched the exact same phrase 27 times in a row
+- It retrieved the same 3 useless documents every time
+- It never found the answer
+- RAGAS still gave it a score of **0.927 out of 1.0** (excellent)
+- Actual correct answers: **0%**
+
+AgenticRAG-Bench is the evaluation framework we're building to catch all the things RAGAS misses.
+
+### What "agentic" means
+
+A normal RAG (Retrieval-Augmented Generation) system works like this:
+```
+Question → Search once → Get documents → Generate answer
+```
+
+An **agentic** RAG system is smarter — it can decide:
+- What to search for
+- Whether the results were good enough
+- Whether to search again with a different query
+- When to stop and give an answer
+
+Think of it like a detective. A normal system grabs the first file it finds and writes a report. An agentic system looks at the first file, decides it needs more evidence, searches again, and builds the answer step by step.
+
+Our benchmark grades the detective's behaviour — not just whether they named the right suspect.
+
+---
+
+## Part 2 — The dataset (MuSiQue)
+
+### What is MuSiQue?
+
+MuSiQue (Multi-hop Questions) is a dataset of questions that **require multiple steps to answer**. You can't look up the answer in one search — you have to find an intermediate fact first.
+
+**Example of a 2-hop question:**
+> "What country is the birthplace of the founder of the company that makes the iPhone?"
+
+- **Hop 1:** Who founded the company that makes the iPhone? → Steve Jobs
+- **Hop 2:** Where was Steve Jobs born? → San Francisco, USA
+
+A single search for "iPhone country" won't work. You need to chain two searches together.
+
+**Example of a 3-hop question:**
+> "What is the capital of the country where the director of Parasite was born?"
+
+- **Hop 1:** Who directed Parasite? → Bong Joon-ho
+- **Hop 2:** Where was Bong Joon-ho born? → South Korea
+- **Hop 3:** What is the capital of South Korea? → Seoul
+
+Our benchmark runs these questions through an AI agent and grades how well it navigated the hops.
+
+### What are supporting paragraphs?
+
+For each question, MuSiQue provides the specific paragraphs that contain the answer. We use these as our **knowledge base** — the documents the agent is allowed to search through.
+
+We also use them as ground truth for D2: if the agent retrieved a supporting paragraph, that's a good retrieval step. If it retrieved something irrelevant, that's a bad step.
+
+---
+
+## Part 3 — The AI system
+
+### LangGraph ReAct agent
+
+The AI we're testing is a **ReAct agent** built with LangGraph and powered by Llama 3.1 8B running locally on Ollama.
+
+**ReAct** stands for Reason + Act. The agent alternates between two things:
+1. **Reasoning:** "I need to find out who directed Parasite first"
+2. **Acting:** Calls the search tool with the query "director of Parasite"
+
+Then it looks at the results and reasons again:
+1. **Reasoning:** "OK, it's Bong Joon-ho. Now I need his birthplace"
+2. **Acting:** Calls the search tool with "Bong Joon-ho birthplace"
+
+And so on until it has enough to answer, or it gives up.
+
+**LangGraph** is the framework that manages this loop — deciding when the agent should search again vs. when it should stop and give the final answer.
+
+**Llama 3.1 8B** is the language model doing the reasoning. "8B" means 8 billion parameters — a mid-size model that runs locally without a GPU. It's capable but not as powerful as GPT-4 or Claude.
+
+### FAISS and nomic-embed-text
+
+**FAISS** (Facebook AI Similarity Search) is the search engine the agent uses. It doesn't search by keywords — it converts text to numbers (vectors) and finds documents that are mathematically similar to the query.
+
+**nomic-embed-text** is the model that does this conversion. It's a dedicated embedding model — its only job is turning text into vectors for search. It's better at this specific task than using the main LLM for embeddings.
+
+**k** is the number of documents FAISS returns per search. If k=3, every search call returns 3 documents. If k=5, it returns 5.
+
+**Why k matters:** A higher k casts a wider net — you might catch a relevant document you'd miss with k=3. But it also means the agent has more documents to read per step, which costs more tokens and can confuse it. Our Week 2 ablation found that increasing k from 3 to 5 didn't help — the failure was in planning, not in how many documents were returned.
+
+---
+
+## Part 4 — The 6 evaluation dimensions (D1–D6)
+
+These are the six ways we grade the agent. Think of them as six different questions a good coach would ask after watching a game.
+
+---
+
+### D1 — Answer Correctness
+
+**Simple version:** Did the agent get the right answer?
+
+**How it's measured:** The agent's final answer is compared to the ground-truth answer using exact match, token overlap, and sequence similarity. A score of 1.0 means correct. 0.0 means completely wrong.
+
+**Example:**
+- Ground truth: `"Martin Eberhard"`
+- Agent answer: `"Elon Musk"` → D1 = 0.0
+- Agent answer: `"Martin Eberhard"` → D1 = 1.0
+- Agent answer: `"Martin Eberhard co-founded Tesla"` → D1 partial (contains the answer but isn't an exact string match)
+
+**What D1 cannot tell you:** Whether the agent was close, whether it retrieved the right context, or why it failed. It's purely the outcome.
+
+**Week 3 result:** 11/50 = 22% accuracy. 29 questions scored D1=0.0 (complete miss).
+
+**Degenerate outputs:** A special case where the agent produces broken output — like printing a raw JSON tool call instead of an answer, or saying "Sorry, I can't process this." These are caught by `_is_degenerate()` and forced to D1=0.0 so they don't pollute the averages.
+
+---
+
+### D2 — Retrieval Step Quality
+
+**Simple version:** Each time the agent did a search, did it actually find useful documents?
+
+**How it's measured:** For each search call, we check how many of the k=3 returned documents are actually from the MuSiQue supporting paragraphs (the ones that contain the answer). This is called **precision at k**.
+
+The formula: `d2 = avg_precision × 0.8 + 0.2 (if any relevant doc was ever retrieved)`
+
+**Example with k=3:**
+- Search returns: [relevant doc, irrelevant doc, irrelevant doc] → precision = 1/3 = 0.333 → D2 = 0.333×0.8+0.2 = 0.467
+- Search returns: [irrelevant, irrelevant, irrelevant] → precision = 0/3 = 0 → D2 = 0.0
+- Search returns: [relevant, relevant, irrelevant] → precision = 2/3 = 0.667 → D2 = 0.733
+
+**Why D2 is quantized (only 4 possible values):** Because k=3 means precision can only be 0/3, 1/3, 2/3, or 3/3. Our agent never achieved 2/3 or 3/3 — it never got more than 1 relevant doc per search. The highest D2 you'll see is 0.467.
+
+**What D2 reveals:** In Week 3, 26 out of 50 questions had D2=0.0 across all their search steps — the agent retrieved nothing useful in any of its searches. This points to the embedding model (nomic-embed-text) struggling against MuSiQue's distractor paragraphs, not to the agent being lazy.
+
+**D2 correct vs incorrect:** Questions the agent got right had avg D2=0.351. Questions it got wrong had avg D2=0.136. This is a 2.5× gap — retrieval quality is the strongest predictor of whether the agent gets the answer right.
+
+---
+
+### D3 — Planning Coherence
+
+**Simple version:** Did the agent search in a sensible, progressive way — or did it loop, give up too early, or jump randomly between topics?
+
+**How it's measured:** Three components combined:
+- **Hop coverage:** Did the agent make enough searches for the number of hops required? (1 search for a 2-hop question = bad)
+- **Query diversity:** Were the queries meaningfully different from each other? (identical queries = looping; completely unrelated queries = random pivoting)
+- **Undershoot penalty:** If the agent made fewer searches than hops needed, it takes a penalty of `0.5 × undershoot_fraction`
+
+**Why 1-step questions score D3=0.0:** For a 2-hop question with only 1 unique search:
+- hop_coverage = 0.5 (did 1, needed 2)
+- diversity = 0.0 (can't measure diversity with only 1 query)
+- undershoot_penalty = 0.25
+
+Final: `0.5×0.5 + 0.5×0.0 − 0.25 = 0.0`
+
+This is intentional — making only 1 search on a 2-hop question is definitively bad planning, and D3 calls it zero.
+
+**Example of a good D3 path (for a 2-hop question about a director's birthplace):**
+```
+Search 1: "director of Parasite"           → returns relevant doc about Bong Joon-ho ✓
+Search 2: "Bong Joon-ho birthplace"        → returns relevant doc about South Korea ✓
+D3 ≈ 0.80 (2 diverse searches, progressive narrowing)
+```
+
+**Example of a bad D3 path:**
+```
+Search 1: "director of Parasite"           → returns relevant doc about Bong Joon-ho ✓
+(agent immediately answers without searching for birthplace)
+D3 = 0.0 (only 1 search, severe undershoot penalty)
+```
+
+**The Week 2 → Week 3 shift:** In Week 2, the agent averaged 1.38 steps — most questions only got 1 search. After adding system prompt enforcement ("you must search at least twice"), the avg jumped to 2.02. D3 went from 0.297 to 0.626. This fixed the planning problem but didn't fix retrieval — Type C failures (good planning, empty retrieval) became the new dominant failure mode.
+
+---
+
+### D4 — Noise Robustness *(planned — Week 4)*
+
+**Simple version:** If we plant fake or misleading documents in the knowledge base, does the agent get confused?
+
+**How it's measured:** Run each question twice:
+1. Clean run — normal knowledge base
+2. Noisy run — 25% of documents replaced with plausible-but-wrong content
+
+Then compute **interference rate:**
+```
+interference_rate = (correct_clean − correct_noisy) / correct_clean
+```
+
+If interference_rate = 1.0, the agent is completely fooled by noise. If 0.0, it's perfectly robust.
+
+**Example:**
+- Clean: "Tesla was founded in 2003 by Martin Eberhard and Marc Tarpenning." (correct)
+- Noisy injection: "Tesla was founded in 2002 by Elon Musk in California." (wrong but plausible)
+
+A fragile agent picks up the fake document and answers "Elon Musk." A robust agent ignores it.
+
+**Why we expect high interference:** Our current D2=0.183 on clean data means the agent is already barely finding useful documents. Injecting noise will likely push many questions from borderline-correct to wrong.
+
+---
+
+### D5 — Trajectory Efficiency
+
+**Simple version:** Did the agent do the work cleanly, without wasting steps or tokens?
+
+**How it's measured:**
+```
+efficiency_score = 1.0 − (redundancy × 0.5) − (token_penalty × 0.3) − loop_penalty
+```
+
+- **redundancy:** fraction of search queries that were near-identical to a previous one
+- **token_penalty:** how many tokens per step, normalised against a baseline of 400 tokens/step
+- **loop_penalty:** 0.3 if any exact query repetition was detected
+
+**`tokens_per_correct_answer`:** The total tokens used divided by whether the answer was correct. For incorrect answers, this is `null` (the agent spent tokens and produced nothing useful). The real efficiency number is the average over correct questions only: **524.2 tokens per correct answer** in Week 3.
+
+**The D5 trap:** D5 rewards being brief. An agent that immediately gives up and outputs garbage scores near 1.0 — because it used zero tokens and made zero redundant queries. In Week 3, our two degenerate questions (Q45, Q47) previously scored D5=1.0 (perfect). After the fix, they score D5=0.0. Always read D5 alongside D1 — high D5 + low D1 means the agent was efficiently wrong.
+
+**Week 3 result:** Avg D5=0.811. This dropped from 0.913 because (a) the degenerate fix removed the fake 1.0 scores and (b) all questions now take 2 steps instead of 1, which uses slightly more tokens.
+
+---
+
+### D6 — Difficulty Interaction Collapse *(preview — needs more data)*
+
+**Simple version:** Does the agent fall apart much faster when a question is hard in multiple ways at once, rather than just hard in one way?
+
+**Background — the 4 difficulty axes:**
+- **Reasoning Complexity (RC):** How many hops? 1-hop is easy, 3-hop is hard.
+- **Retrieval Difficulty (RD):** How many distractor documents that look relevant but aren't? More distractors = harder.
+- **Entity Ambiguity (EA):** Are there similar-sounding names that could be confused?
+- **Temporal Complexity (TC):** Does the answer depend on time? ("Who was president of X in 2015?")
+
+**The D6 hypothesis:** A question with RC=3 (hard reasoning) might cause 30% accuracy drop. A question with RD=3 (many distractors) might cause 25% accuracy drop. But a question with BOTH RC=3 AND RD=3 might cause 80% accuracy drop — much worse than 30%+25%=55% would predict. This super-linear degradation is what D6 tries to measure.
+
+**Why we can't compute D6 yet:** All 50 questions in Week 3 landed in the exact same bucket — RC=2, RD=3 (2 hard axes). We need questions with 0, 1, 2, 3, and 4 hard axes to plot the curve. Week 5 plan: deliberately inject 1-hop, low-distractor questions to create the baseline.
+
+---
+
+## Part 5 — Key variables and terms
+
+### Trajectory
+
+The complete record of what the agent did for one question. Like a play-by-play in sports. Includes:
+- Every search query the agent sent
+- Every document that came back
+- How many tokens were used at each step
+- Whether the step was a loop (same query as before)
+- The final answer
+
+```json
+{
+  "question": "What country is Bong Joon-ho from?",
+  "trajectory": [
+    {"step": 1, "query": "director of Parasite", "docs_returned": 3, "relevant": 1},
+    {"step": 2, "query": "Bong Joon-ho nationality", "docs_returned": 3, "relevant": 1}
+  ],
+  "predicted_answer": "South Korea",
+  "ground_truth": "South Korea",
+  "correct": true
+}
+```
+
+### Precision@k
+
+How many of the k documents returned by a search were actually relevant. If k=3 and 1 document was relevant, precision@k = 1/3 = 0.333.
+
+This is the raw input to D2.
+
+### Hop
+
+One step in a multi-step reasoning chain. A 2-hop question needs 2 pieces of information chained together. A 3-hop question needs 3.
+
+Most questions in our benchmark are 2-hop. The agent consistently struggles even at 2 hops with Llama 3.1 8B.
+
+### Supporting paragraphs
+
+The specific paragraphs from the MuSiQue dataset that contain the information needed to answer the question. Used as (a) the knowledge base the agent searches, and (b) ground truth for judging whether a retrieval step was good.
+
+### System prompt
+
+The instructions we give the agent before it starts answering. In Week 2c and onwards, this includes explicit instructions like "you must search at least twice before giving an answer." The system prompt in Week 3 is what drove the step average from 1.38 to 2.02.
+
+### Exact match
+
+The strictest version of D1 — the agent's answer must match the ground truth string exactly (after normalisation). Our accuracy numbers (22%, 18%, etc.) use exact match. There's also a partial credit score for answers that contain the right words but not in the right form.
+
+### Interference rate
+
+Used in D4. The fraction of questions that the agent gets right on clean data but wrong on noisy data. Measures how easily the agent is fooled by planted misinformation.
+
+### Degenerate output
+
+A structurally broken answer that signals the agent failed before it even started reasoning:
+- Raw JSON: `{"name": "search_knowledge_base", "parameters": ...}` — the LLM printed its tool call as text instead of executing it
+- Refusal: `"Sorry, need more steps to process this request."`
+- Empty: fewer than 5 characters
+
+These are caught and forced to D1=0.0, D5=0.0 so they don't inflate scores.
+
+### Undershooting
+
+When the agent makes fewer searches than the question requires. A 2-hop question requires at least 2 searches — making only 1 is undershooting. This was the dominant failure mode in Week 2 (27/50 questions undershot). Fixed in Week 3 by enforcing minimum steps in the system prompt.
+
+### Retrieval fixation
+
+The Week 1 failure mode — the agent gets stuck searching the exact same query over and over. The opposite of undershooting (too few searches), retrieval fixation is too many identical searches. D3 catches this via its loop detection component.
+
+---
+
+## Part 6 — How the metrics relate to each other
+
+The 5 active metrics form a diagnostic chain:
+
+```
+Is the question hard? (D6)
+        ↓
+Did the agent plan enough searches? (D3)
+        ↓
+Did each search find relevant documents? (D2)
+        ↓
+Did noise confuse the retrieval? (D4)
+        ↓
+Did the agent produce the right final answer? (D1)
+                 + at what cost? (D5)
+```
+
+**D1 alone** tells you the outcome but not the cause.
+
+**D1 + D2** lets you separate "failed because it retrieved nothing useful" from "failed because it had the right context but reasoned wrongly."
+
+**D1 + D3** lets you separate "failed because it gave up too early" from "failed because its searches were bad."
+
+**D1 + D2 + D3** gives you a full diagnostic. In Week 3:
+- 9 questions hit the ideal path: good D3, good D2, correct D1
+- 14 questions had good D3 (planned well) but D2=0 (retrieved nothing) → the embedding model is the bottleneck
+- 2 questions were degenerate: D1=0, D2=0, D3=0, D5=0
+
+**RAGAS** sees only the final answer and final retrieved docs. It would see all 50 questions as high-scoring (fluent, on-topic answers) and have no way to distinguish the 9 ideal-path questions from the 14 Type-C failures.
+
+---
+
+## Part 7 — What we're trying to prove
+
+The benchmark is building toward one core claim for a research paper:
+
+> **Claim:** Agentic RAG systems require multi-dimensional process evaluation, not just outcome evaluation. A system can score 0.927 on RAGAS while failing 100% of questions, getting stuck in 27-step loops, and spending 3,429 tokens per wrong answer. These failures are invisible to RAGAS but clearly captured by D1–D6.
+
+Each week adds evidence:
+- **Week 1:** The gap exists (RAGAS=0.927, accuracy=0%)
+- **Week 2:** The gap is measurable (D1 + D5 as metric classes, ablation over k and prompting)
+- **Week 3:** The gap is diagnostic (D2 + D3 pinpoint *where* failures happen — retrieval vs. planning)
+- **Week 4:** D4 will show the gap includes robustness (RAGAS can't measure noise sensitivity)
+- **Week 5–6:** D6 will show the gap includes difficulty interaction (RAGAS can't predict non-linear degradation)
+- **Week 7–9:** Cross-system comparison will show the gap is consistent across different architectures
+
+The final output is an arXiv preprint and a public leaderboard on HuggingFace Spaces.
