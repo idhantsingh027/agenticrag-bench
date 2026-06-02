@@ -23,7 +23,7 @@
 
 ## What is this?
 
-AgenticRAG-Bench is a research benchmark that evaluates **agentic RAG systems** not just on whether the final answer is correct, but on **how the agent behaved** to get there — what it retrieved, how it planned, how many tool calls it wasted, and how much it cost in tokens and latency.
+AgenticRAG-Bench is a research benchmark that evaluates **agentic RAG systems** not just on whether the final answer is correct, but on **how the agent behaved** to get there — what it retrieved, how it planned, how many tool calls it wasted, and how much it cost in tokens.
 
 > **Core thesis:** RAGAS-style evaluation scores the final answer. It cannot see that an agent searched the same query 27 times, wasted 88% of its retrieval calls, or achieved 0.927 answer relevancy while getting 0% of answers actually correct. AgenticRAG-Bench measures both the outcome and the process.
 
@@ -55,12 +55,53 @@ AgenticRAG-Bench is a research benchmark that evaluates **agentic RAG systems** 
 
 ## Results so far
 
-| Week | Questions | System | Embeddings | Retrieval k | System Prompt | D1 Accuracy | D5 Efficiency | Key finding |
-|---|---|---|---|---|---|---|---|---|
-| 1 | 3 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | llama3.1:8b | k=3 | None | 0/3 = 0% | 88% wasted | RAGAS answer_relevancy = 0.927 despite 0% accuracy. Agent entered a 27-step retrieval loop → exposes evaluation blind spot. |
-| 2a | 5 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | k=3 | None | 1/5 = 20% | 0.763 | Real KB + stronger embeddings eliminate loops, but reveal early stopping and weak multi-hop planning. |
-| 2b | 5 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | k=5 | None | 0/5 = 0% | 0.692 | Increasing k does not improve performance. Agent still performs single-step retrieval → failure is not recall but planning. |
-| 2c | 5 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | k=5 | Multi-step prompt + tool constraints | 2/5 = 40% | 0.809 | Enforcing multi-step behavior improves accuracy. Remaining errors stem from reasoning instability (entity drift) and KB gaps, not retrieval. |
+| Week | Questions | System | Embeddings | k | System Prompt | D1 Accuracy | D2 Retrieval | D3 Planning | D5 Efficiency | Key finding |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 3 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | llama3.1:8b | 3 | None | 0/3 = 0% | — | D3: 0.04 | 88% wasted | RAGAS answer_relevancy = 0.927 despite 0% accuracy. Agent entered a 27-step retrieval loop → exposes evaluation blind spot. |
+| 2a | 5 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 3 | None | 1/5 = 20% | — | — | 0.763 | Real per-question KB + stronger embeddings eliminate loops, but reveal early stopping and weak multi-hop planning. |
+| 2b | 5 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 5 | None | 0/5 = 0% | — | — | 0.692 | Increasing k does not improve accuracy. Failure is planning, not recall. |
+| 2c | 5 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 5 | Multi-step prompt | 2/5 = 40% | — | — | 0.809 | System prompt enforcement improves accuracy. Remaining errors: entity drift and KB gaps, not retrieval. |
+| 3 | 50 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 3 | Multi-step prompt | 11/50 = 22% | 0.183 | 0.626 | 0.811 | D2 and D3 implemented as metric classes. D3 undershooting fixed — avg steps 1.38 → 2.02. Dominant failure mode shifts from "gave up early" (Type B) to "planned well, retrieved nothing" (Type C, 14/50 questions). Degenerate output detection added to D1. D5 degenerate penalty fixed. |
+
+---
+
+## Week 3 deep-dive
+
+### What changed
+
+Week 3 introduced D2 (Retrieval Step Quality) and D3 (Planning Coherence) as proper metric classes, expanded the benchmark to 50 questions, and fixed three code issues carried over from Week 2.
+
+**Fixes applied:**
+- `tokens_per_correct_answer` now stores `null` for incorrect questions instead of `Infinity`
+- `_is_degenerate()` added to D1 — catches raw JSON tool dumps and refusal outputs, forces D1=0.0
+- D5 now receives the degenerate flag from D1 and returns `efficiency_score: 0.0` instead of a misleading 1.0
+
+### What the scores mean
+
+| Metric | Score | What it tells you |
+|---|---|---|
+| D1 = 22% | 11/50 correct | 78% of final answers are wrong. D1 is the outcome — it can't say why. |
+| D2 = 0.183 | avg retrieval precision | 26/50 questions retrieved zero relevant docs across all search steps. FAISS + nomic-embed-text struggles against MuSiQue's high-distractor paragraphs. |
+| D3 = 0.626 | avg planning coherence | Almost everyone makes 2 diverse searches now (up from 1.38 steps avg). Planning is no longer the bottleneck — retrieval is. |
+| D5 = 0.811 | avg trajectory efficiency | Clean, non-looping paths. Real cost: 524.2 tokens per correct answer across the 11 successes. |
+
+### Failure pattern breakdown (50 questions)
+
+| Pattern | Count | Description |
+|---|---|---|
+| Type A: D2=0 + D3=0 + wrong | 2 | Degenerate outputs (Q45, Q47) — agent produced no search steps at all |
+| Type B: high D2 + D3=0 + wrong | 0 | Eliminated. Previously 10 questions stopped after one search. System prompt fix closed this mode entirely. |
+| Type C: D3≥0.6 + D2=0 + wrong | 14 | **Dominant failure.** Agent plans correctly (2 diverse searches) but FAISS returns nothing relevant both times. |
+| Type D: D2≥0.3 + D3≥0.5 + correct | 9 | Ideal path — good retrieval, good planning, correct answer. Up from 4 in the previous run. |
+
+### D2 vs D3 diagnosis
+
+D2 and D3 catch orthogonal failure modes:
+
+- **D2 correct avg = 0.351 vs incorrect = 0.136** (2.5× gap) — retrieval quality is the strongest predictor of correctness
+- **D3 correct avg = 0.687 vs incorrect = 0.609** (1.13× gap) — planning coherence gap has narrowed because almost everyone makes 2 searches now
+
+The problem has been correctly re-diagnosed: fixing undershooting (D3) did not fix retrieval (D2). The next lever is query formulation and embedding quality.
 
 ---
 
@@ -108,7 +149,7 @@ Get a free Groq API key at [console.groq.com](https://console.groq.com) — no c
 jupyter notebook
 ```
 
-Open `notebooks/1_agenticrag_bench.ipynb` and run all cells.
+Open the notebook for the week you want to run.
 
 ---
 
@@ -117,16 +158,22 @@ Open `notebooks/1_agenticrag_bench.ipynb` and run all cells.
 ```
 agenticrag-bench/
 ├── notebooks/
-│   └── 1_agenticrag_bench.ipynb      ← Week 1 experiment
+│   ├── 1_agenticrag_bench.ipynb     ← Week 1: evaluation gap proof-of-concept
+│   ├── 2_agenticrag_bench.ipynb     ← Week 2: D1 + D5 metric classes, 3-way ablation
+│   └── 3_agenticrag_bench.ipynb     ← Week 3: D2 + D3 metrics, 50-question benchmark
 ├── data/
 │   ├── questions/
-│   │   └── musique_10.json           ← 10 MuSiQue questions
+│   │   └── musique_10.json           ← MuSiQue questions
 │   └── trajectories/
-│       ├── 1_agent_results.json      ← agent trajectories
-│       └── 1_ragas_scores.json       ← RAGAS scores
+│       ├── 1_agent_results.json      ← Week 1 trajectories
+│       ├── 1_ragas_scores.json       ← Week 1 RAGAS scores
+│       ├── 2_agent_results.json      ← Week 2 trajectories (3 ablation runs)
+│       └── 3_agent_results.json      ← Week 3 trajectories (50 questions, D1–D3+D5)
 ├── notes/
-│   └── week1_observations.md         ← research observations
-├── src/                              ← evaluation harness (Week 2+)
+│   ├── 1_observations.md
+│   ├── 2_observations.md
+│   └── 3_observations.md
+├── src/                              ← evaluation harness
 ├── .env.example
 ├── .gitignore
 └── requirements.txt
@@ -141,25 +188,19 @@ Week 1 is not about achieving high MuSiQue accuracy. It is about **demonstrating
 ### What we did
 
 - Loaded 10 questions from MuSiQue (multi-hop QA dataset)
-- Built a small intentionally limited 15-document knowledge base
+- Built a small, intentionally limited 15-document knowledge base
 - Ran a LangGraph ReAct agent with Llama 3.1 8B via local Ollama
 - Logged every tool call, query, retrieved document, token count, and latency
-- Ran RAGAS evaluation using Groq (Llama 3.3 70B as judge) on the same results
+- Ran RAGAS evaluation using Groq (Llama 3.3 70B as judge)
 - Compared RAGAS scores against trajectory statistics
 
 ### Why the toy knowledge base is intentionally weak
 
-The 15-document KB contains facts about The Godfather, Churchill, and Nobel Prize physicists — not the topics MuSiQue asks about. This creates a **controlled failure mode** where:
-
-- Retrieval consistently returns irrelevant documents
-- The agent cannot find the answer and loops
-- RAGAS answer_relevancy still scores high because the agent's hallucinated answers are fluent and on-topic
-
-This demonstrates that high answer_relevancy does not imply good retrieval behavior or correct answers.
+The 15-document KB contains facts about The Godfather, Churchill, and Nobel Prize physicists — not the topics MuSiQue asks about. This creates a **controlled failure mode** where retrieval consistently returns irrelevant documents, the agent loops, and RAGAS answer_relevancy still scores high because hallucinated answers are fluent and on-topic.
 
 ### Week 1 finding — the retrieval fixation loop
 
-Question 1 ("Who is the spouse of the Green performer?") triggered a behavior we call **retrieval fixation** — the agent searched the exact same query `"Green performer spouse"` 27 consecutive times, retrieved the same 3 irrelevant documents each time, and never adapted its strategy.
+Question 1 triggered **retrieval fixation** — the agent searched the exact same query `"Green performer spouse"` 27 consecutive times, retrieved the same 3 irrelevant documents each time, and never adapted.
 
 ```
 Step  1: "Green performer spouse" → [Churchill, Godfather, Friedkin]
@@ -168,7 +209,7 @@ Step  2: "Green performer spouse" → [Churchill, Godfather, Friedkin]
 Step 27: "Green performer spouse" → [Churchill, Godfather, Friedkin]
 ```
 
-RAGAS cannot detect this. AgenticRAG-Bench D3 (planning coherence) flags it immediately.
+RAGAS cannot detect this. AgenticRAG-Bench D3 flags it immediately.
 
 ---
 
@@ -211,7 +252,14 @@ All three measure properties of the final answer and final retrieved context. No
 <details>
 <summary><strong>Why faithfulness was 0.0 in Week 1</strong></summary>
 
-The knowledge base had no documents about the questions being asked. The agent retrieved Churchill and Godfather documents for a question about a musician's spouse. Its answer came from Llama's own training memory, not from the retrieved documents. Faithfulness correctly scores this as 0.0 — the answer has no grounding in what was retrieved.
+The KB had no documents about the questions being asked. The agent retrieved Churchill and Godfather documents, then answered from Llama's own training memory. Faithfulness correctly scores this as 0.0 — the answer has no grounding in what was retrieved.
+
+</details>
+
+<details>
+<summary><strong>Degenerate output (Week 3)</strong></summary>
+
+A degenerate output is when the agent produces a structurally broken answer that has nothing to do with the question — for example, outputting a raw JSON tool-call string (`{"name": "search_knowledge_base"...}`) or a refusal ("Sorry, need more steps to process this request."). These are caught by `_is_degenerate()` in D1 and forced to D1=0.0 and D5=0.0 so they don't pollute averages.
 
 </details>
 
@@ -219,15 +267,24 @@ The knowledge base had no documents about the questions being asked. The agent r
 
 ## RAGAS setup (two models, two jobs)
 
-Week 1 uses two different models for two different purposes:
-
 | Role | Model | Where it runs | Why |
 |---|---|---|---|
 | Agent (answering) | `llama3.1:8b` | Local via Ollama | Free, private, no API needed |
-| Embeddings (retrieval) | `llama3.1:8b` | Local via Ollama | Converts text to vectors for FAISS search |
-| RAGAS judge (evaluation) | `llama-3.3-70b-versatile` | Groq (free API) | Stronger model for reliable LLM-as-judge scoring, handles parallel eval calls |
+| Embeddings (retrieval) | `nomic-embed-text` | Local via Ollama | Dedicated retrieval model; better similarity quality than llama3.1:8b embeddings |
+| RAGAS judge (evaluation) | `llama-3.3-70b-versatile` | Groq (free API) | Stronger model for reliable LLM-as-judge scoring |
 
-> **Note for Week 2:** Week 1 uses `llama3.1:8b` for both generation and embeddings. Week 2 will switch embeddings to `nomic-embed-text` — a dedicated retrieval model that gives significantly better similarity search quality.
+---
+
+## Roadmap
+
+- [x] **Week 1** — Core experiment: trajectory logging, RAGAS comparison, retrieval fixation loop documented
+- [x] **Week 2** — Evaluation harness: D1 + D5 metric classes, per-question FAISS indexes, loop detection, 3-way ablation (k=3, k=5, k=5+prompt)
+- [x] **Week 3** — D2 + D3 metric classes, 50-question benchmark, degenerate output detection, D5 degenerate fix, `tokens_per_correct_answer` fix, undershooting fixed (avg steps 1.38 → 2.02)
+- [ ] **Week 4** — D4 noise robustness: controlled noise injection into 25% of questions, interference rate measurement
+- [ ] **Week 5** — D6 difficulty interaction: seed dataset with single-hop low-distractor questions, plot accuracy degradation curve across difficulty axes
+- [ ] **Week 6** — Query rewriting / retrieval improvement: address dominant Type C failure (planned well, retrieved nothing)
+- [ ] **Week 7–9** — Full benchmark runs across 4–5 systems and 3+ models
+- [ ] **Week 10** — arXiv preprint + public leaderboard on HuggingFace Spaces
 
 ---
 
@@ -240,14 +297,3 @@ Week 1 uses two different models for two different purposes:
 | 3 | Lin et al. — *RAGCap-Bench* (arXiv:2510.13910) | Component-level evaluation. Motivates D2 and D3. Gap: 255 questions, no latency/cost, no multi-agent. |
 | 4 | Xi et al. — *InfoDeepSeek* (arXiv:2505.15872) | Dynamic web retrieval eval. Discovered retrieval interference. Motivates D4. Gap: no step attribution, no cost tracking. |
 | 5 | Narita et al. — *Overcoming RAG Impracticality* (arXiv:2604.02640) | 4-axis difficulty taxonomy. Motivates D6. Gap: 100 questions, single system, no cross-framework. |
-
----
-
-## Roadmap
-
-- [x] **Week 1** — Core experiment: trajectory logging, RAGAS comparison, finding documented
-- [ ] **Week 2** — Evaluation harness: refactor trajectory logger, implement D1 + D5 as proper metrics, add `max_steps` loop prevention, use MuSiQue supporting paragraphs as knowledge base
-- [ ] **Week 3** — Dataset v1: 400+ labelled questions on HuggingFace, 4-axis difficulty tags
-- [ ] **Week 4–6** — Implement D2, D3, D4, D6 metrics
-- [ ] **Week 7–9** — Full benchmark runs across 4–5 systems and 3+ models
-- [ ] **Week 10** — arXiv preprint + public leaderboard on HuggingFace Spaces
