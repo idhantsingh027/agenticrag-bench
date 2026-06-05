@@ -29,17 +29,6 @@ AgenticRAG-Bench is a research benchmark that evaluates **agentic RAG systems** 
 
 ---
 
-## The problem in one table
-
-| What happened (Week 1 experiment) | RAGAS score | AgenticRAG-Bench score |
-|---|---|---|
-| Agent searched same query 27 times in a row | Not measured | D3 planning coherence: 0.04 |
-| 88% of retrieval steps were redundant | Not measured | D5 trajectory efficiency: 0.12 |
-| Answer relevancy 0.93, actual accuracy 0% | answer_relevancy: 0.927 | D1 correctness: 0.000 |
-| 3,429 tokens used for one wrong answer | Not measured | D5 tokens/correct-answer: ∞ |
-
----
-
 ## Evaluation dimensions (D1–D6)
 
 | Dimension | What it measures | Paper motivation |
