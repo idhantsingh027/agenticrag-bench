@@ -29,6 +29,17 @@ AgenticRAG-Bench is a research benchmark that evaluates **agentic RAG systems** 
 
 ---
 
+## The problem in one table
+
+| What happened (Week 1 experiment) | RAGAS score | AgenticRAG-Bench score |
+|---|---|---|
+| Agent searched same query 27 times in a row | Not measured | D3 planning coherence: 0.04 |
+| 88% of retrieval steps were redundant | Not measured | D5 trajectory efficiency: 0.12 |
+| Answer relevancy 0.93, actual accuracy 0% | answer_relevancy: 0.927 | D1 correctness: 0.000 |
+| 3,429 tokens used for one wrong answer | Not measured | D5 tokens/correct-answer: ∞ |
+
+---
+
 ## Evaluation dimensions (D1–D6)
 
 | Dimension | What it measures | Paper motivation |
@@ -51,6 +62,7 @@ AgenticRAG-Bench is a research benchmark that evaluates **agentic RAG systems** 
 | 2b | 5 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 5 | None | 0/5 = 0% | — | — | 0.692 | Increasing k does not improve accuracy. Failure is planning, not recall. |
 | 2c | 5 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 5 | Multi-step prompt | 2/5 = 40% | — | — | 0.809 | System prompt enforcement improves accuracy. Remaining errors: entity drift and KB gaps, not retrieval. |
 | 3 | 50 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 3 | Multi-step prompt | 11/50 = 22% | 0.183 | 0.626 | 0.811 | D2 and D3 implemented as metric classes. D3 undershooting fixed — avg steps 1.38 → 2.02. Dominant failure mode shifts from "gave up early" (Type B) to "planned well, retrieved nothing" (Type C, 14/50 questions). Degenerate output detection added to D1. D5 degenerate penalty fixed. |
+| 4 | 50 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 3 | Multi-step prompt + query rewriting | 15/50 = 30% | 0.302 | 0.647 | 0.860 | Query rewriting → D2 +58% (0.191→0.302), accuracy +36% (22%→30%). D4 implemented: interference rate = −0.133 (noise helped, not hurt). Cross-question swap noise too weak — constructive interference. 8 questions now achieve multi-hit retrieval (D2>0.467), impossible in Week 3. |
 
 ---
 
@@ -91,6 +103,55 @@ D2 and D3 catch orthogonal failure modes:
 - **D3 correct avg = 0.687 vs incorrect = 0.609** (1.13× gap) — planning coherence gap has narrowed because almost everyone makes 2 searches now
 
 The problem has been correctly re-diagnosed: fixing undershooting (D3) did not fix retrieval (D2). The next lever is query formulation and embedding quality.
+
+---
+
+## Week 4 deep-dive
+
+### What changed
+
+Week 4 introduced two new capabilities: **query rewriting** (LLM rewrites search queries before FAISS) and **D4 noise robustness** (cross-question paragraph swap with 25% distractor replacement).
+
+### Query rewriting effect
+
+Before FAISS search, the agent's raw query is passed to Llama 3.1 8B with the prompt: *"Rewrite this search query to be effective for a vector similarity search. Extract key entities and facts. Remove filler words."* The rewritten query has higher entity density, which produces better vector similarity.
+
+| Metric | Week 3 (no rewriting) | Week 4 (rewriting ON) | Change |
+|---|---|---|---|
+| D1 Accuracy | 11/50 = 22% | 15/50 = 30% | +36% relative |
+| D2 Retrieval | 0.191 | 0.302 | +58% relative |
+| D2=0 questions | 24/48 | 15/48 | −37.5% |
+| D2>0.467 questions | 0/48 | 8/48 | New capability |
+| D3 Planning | 0.652 | 0.647 | Unchanged |
+
+**Key insight:** 8 questions now achieve D2>0.467, meaning the agent retrieves 2+ relevant documents per search step. This never happened in Week 3 (max was 1 relevant doc per step = D2=0.467). Query rewriting doesn't just find *any* relevant doc — it finds *more* relevant docs per query.
+
+### D4 noise robustness — the constructive interference finding
+
+| Metric | Value |
+|---|---|
+| Correct (clean) | 15/50 |
+| Correct (noisy) | 17/50 |
+| Interference rate | −0.133 |
+| Flipped (right→wrong) | 4 |
+| Gained (wrong→right) | 6 |
+
+The interference rate is **negative** — noise helped more than it hurt. This is because:
+- 4 of 6 "gained" questions had D2=0 on clean data but D2>0 on noisy data. The injected supporting paragraphs from other questions were higher-quality text than the random distractors they replaced.
+- 2 of 4 "flipped" questions had identical D2 in both runs — noise confused the LLM's *reasoning*, not its retrieval.
+- The agent is so retrieval-starved (D2=0.302) that any additional relevant-looking text helps more than it confuses.
+
+**Implication:** Cross-question paragraph swap is not adversarial enough. For a real robustness test, need LLM-generated paragraphs with wrong facts about the same entities.
+
+### What the scores mean now
+
+| Metric | Score | What it tells you |
+|---|---|---|
+| D1 = 30% | 15/50 correct | Query rewriting improved accuracy 22%→30%. Still 70% wrong, but the D2→D1 pipeline is confirmed. |
+| D2 = 0.302 | avg retrieval precision | D2=0 dropped from 24 to 15 questions. 8 questions now get multi-hit retrieval. Still the main bottleneck. |
+| D3 = 0.647 | avg planning coherence | Flat vs Week 3. Planning is not the differentiator — D3 for correct (0.655) ≈ incorrect (0.643). |
+| D4 = −0.133 | interference rate | Noise accidentally helped. Constructive interference reveals retrieval starvation. |
+| D5 = 0.860 | avg trajectory efficiency | Slightly improved — query rewriting uses marginally more tokens but improves outcomes. |
 
 ---
 
@@ -149,7 +210,8 @@ agenticrag-bench/
 ├── notebooks/
 │   ├── 1_agenticrag_bench.ipynb     ← Week 1: evaluation gap proof-of-concept
 │   ├── 2_agenticrag_bench.ipynb     ← Week 2: D1 + D5 metric classes, 3-way ablation
-│   └── 3_agenticrag_bench.ipynb     ← Week 3: D2 + D3 metrics, 50-question benchmark
+│   ├── 3_agenticrag_bench.ipynb     ← Week 3: D2 + D3 metrics, 50-question benchmark
+│   └── 4_agenticrag_bench.ipynb     ← Week 4: query rewriting + D4 noise robustness
 ├── data/
 │   ├── questions/
 │   │   └── musique_10.json           ← MuSiQue questions
@@ -269,7 +331,7 @@ A degenerate output is when the agent produces a structurally broken answer that
 - [x] **Week 1** — Core experiment: trajectory logging, RAGAS comparison, retrieval fixation loop documented
 - [x] **Week 2** — Evaluation harness: D1 + D5 metric classes, per-question FAISS indexes, loop detection, 3-way ablation (k=3, k=5, k=5+prompt)
 - [x] **Week 3** — D2 + D3 metric classes, 50-question benchmark, degenerate output detection, D5 degenerate fix, `tokens_per_correct_answer` fix, undershooting fixed (avg steps 1.38 → 2.02)
-- [ ] **Week 4** — D4 noise robustness: controlled noise injection into 25% of questions, interference rate measurement
+- [x] **Week 4** — D4 noise robustness: query rewriting for D2 improvement, cross-question noise injection, interference rate measurement
 - [ ] **Week 5** — D6 difficulty interaction: seed dataset with single-hop low-distractor questions, plot accuracy degradation curve across difficulty axes
 - [ ] **Week 6** — Query rewriting / retrieval improvement: address dominant Type C failure (planned well, retrieved nothing)
 - [ ] **Week 7–9** — Full benchmark runs across 4–5 systems and 3+ models
