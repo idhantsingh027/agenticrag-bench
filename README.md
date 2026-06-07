@@ -119,10 +119,10 @@ Before FAISS search, the agent's raw query is passed to Llama 3.1 8B with the pr
 | Metric | Week 3 (no rewriting) | Week 4 (rewriting ON) | Change |
 |---|---|---|---|
 | D1 Accuracy | 11/50 = 22% | 15/50 = 30% | +36% relative |
-| D2 Retrieval | 0.191 | 0.302 | +58% relative |
+| D2 Retrieval | 0.183 | 0.302 | +65% relative |
 | D2=0 questions | 24/48 | 15/48 | −37.5% |
 | D2>0.467 questions | 0/48 | 8/48 | New capability |
-| D3 Planning | 0.652 | 0.647 | Unchanged |
+| D3 Planning | 0.626 | 0.647 | Unchanged |
 
 **Key insight:** 8 questions now achieve D2>0.467, meaning the agent retrieves 2+ relevant documents per search step. This never happened in Week 3 (max was 1 relevant doc per step = D2=0.467). Query rewriting doesn't just find *any* relevant doc — it finds *more* relevant docs per query.
 
