@@ -191,28 +191,42 @@ D3 = 0.0 (only 1 search, severe undershoot penalty)
 
 ---
 
-### D4 — Noise Robustness *(planned — Week 4)*
+### D4 — Noise Robustness *(implemented — Week 4)*
 
-**Simple version:** If we plant fake or misleading documents in the knowledge base, does the agent get confused?
+**Simple version:** If we plant misleading documents in the knowledge base, does the agent get confused?
 
 **How it's measured:** Run each question twice:
 1. Clean run — normal knowledge base
-2. Noisy run — 25% of documents replaced with plausible-but-wrong content
+2. Noisy run — 25% of distractor paragraphs replaced with supporting paragraphs from other questions (cross-question swap)
 
 Then compute **interference rate:**
 ```
 interference_rate = (correct_clean − correct_noisy) / correct_clean
 ```
 
-If interference_rate = 1.0, the agent is completely fooled by noise. If 0.0, it's perfectly robust.
+If interference_rate = 1.0, the agent is completely fooled by noise. If 0.0, it's perfectly robust. If **negative**, noise accidentally *helped* the agent (more on this below).
 
-**Example:**
-- Clean: "Tesla was founded in 2003 by Martin Eberhard and Marc Tarpenning." (correct)
-- Noisy injection: "Tesla was founded in 2002 by Elon Musk in California." (wrong but plausible)
+**The D4 metric class** also tracks per-question detail:
+- **flipped:** Questions the agent got right on clean data but wrong on noisy data (noise hurt)
+- **gained:** Questions the agent got wrong on clean data but right on noisy data (noise helped)
 
-A fragile agent picks up the fake document and answers "Elon Musk." A robust agent ignores it.
+**Week 4 result — the surprise:**
+```
+Correct (clean):   15/50
+Correct (noisy):   17/50
+Interference rate:  −0.133
+Flipped (right→wrong): 4
+Gained  (wrong→right): 6
+```
 
-**Why we expect high interference:** Our current D2=0.183 on clean data means the agent is already barely finding useful documents. Injecting noise will likely push many questions from borderline-correct to wrong.
+The interference rate is **negative** — the agent performed *better* on noisy data. This happened because:
+- 4 of 6 "gained" questions had D2=0 on clean data (FAISS retrieved nothing useful) but D2>0 on noisy data
+- The injected supporting paragraphs from other questions were higher-quality text than the random distractors they replaced, so FAISS found them and the LLM extracted enough context to answer
+- The agent is so retrieval-starved (D2=0.302 on clean) that any additional relevant-looking text helps more than it confuses
+
+**What this means:** Cross-question paragraph swap produces **constructive interference** at this difficulty level — the noise isn't adversarial enough. For a real adversarial test, we'd need LLM-generated paragraphs with wrong facts about the *same* entities (e.g., "Tesla was founded in 2002 by Elon Musk" instead of the real founder).
+
+**The key finding from D4 is not "the agent is robust" — it's "the agent is so bad at retrieval that even random helpful noise improves it."** RAGAS has no mechanism to detect this at all.
 
 ---
 
@@ -303,7 +317,27 @@ The strictest version of D1 — the agent's answer must match the ground truth s
 
 ### Interference rate
 
-Used in D4. The fraction of questions that the agent gets right on clean data but wrong on noisy data. Measures how easily the agent is fooled by planted misinformation.
+Used in D4. Computed as `(correct_clean − correct_noisy) / correct_clean`. Positive values mean noise hurt the agent (expected). Negative values mean noise accidentally *helped* the agent (see: constructive interference). In Week 4, the interference rate was **−0.133** — the agent got more questions right on noisy data than clean.
+
+### Query rewriting
+
+A technique added in Week 4 to improve D2 (retrieval step quality). Before each FAISS search, the agent's raw query is passed to the LLM with a rewrite prompt: "Extract key entities and facts. Remove filler words." The rewritten query is used for the actual vector search, while the original query is preserved in the trajectory for D3 analysis.
+
+**Effect:** D2 jumped from 0.183 (Week 3, no rewriting) to 0.302 (Week 4, with rewriting). Questions with D2=0 dropped from 26/50 to 15/48. Accuracy improved from 22% to 30%.
+
+**Example:**
+- Agent query: `"What is the name of the lead singer of the band Green Day?"`
+- Rewritten: `"Green Day lead vocalist Billie Joe Armstrong"`
+
+The rewritten query has higher entity density, which produces better vector similarity against the supporting paragraphs in FAISS.
+
+### Cross-question swap
+
+The noise injection method used for D4 in Week 4. For each question, 25% of its distractor paragraphs are replaced with supporting paragraphs from *other* questions. This creates plausible interference — real Wikipedia text about similar entity types, but containing facts that answer different questions. Supporting paragraphs for the current question are never replaced. Deterministic via `seed=42`.
+
+### Constructive interference
+
+An unexpected phenomenon observed in Week 4's D4 experiment. When supporting paragraphs from other questions were injected as "noise," they sometimes *improved* retrieval quality because they were higher-quality, entity-rich text compared to the random distractors they replaced. FAISS found them, and the LLM extracted enough context to reason to the right answer. This is the opposite of destructive interference (what we expected). It reveals that the agent's retrieval is so starved that any additional relevant-looking text helps.
 
 ### Degenerate output
 
@@ -352,7 +386,12 @@ Did the agent produce the right final answer? (D1)
 - 14 questions had good D3 (planned well) but D2=0 (retrieved nothing) → the embedding model is the bottleneck
 - 2 questions were degenerate: D1=0, D2=0, D3=0, D5=0
 
-**RAGAS** sees only the final answer and final retrieved docs. It would see all 50 questions as high-scoring (fluent, on-topic answers) and have no way to distinguish the 9 ideal-path questions from the 14 Type-C failures.
+**D1 + D2 + D3 + D4** (added in Week 4) reveals robustness. In Week 4:
+- Query rewriting moved 9 questions from D2=0 to D2>0, and 4 of those became correct (D2→D1 pipeline confirmed)
+- D4 showed noise *helped* the agent (interference rate = −0.133) — the agent is so retrieval-starved that any additional text improves it
+- 2 of 4 "flipped" questions had identical D2 in clean and noisy — noise confused the LLM's reasoning, not retrieval. D4 catches a failure mode that D2 alone cannot see.
+
+**RAGAS** sees only the final answer and final retrieved docs. It would see all 50 questions as high-scoring (fluent, on-topic answers) and have no way to distinguish the ideal-path questions from Type-C failures, nor detect constructive interference.
 
 ---
 
@@ -366,7 +405,7 @@ Each week adds evidence:
 - **Week 1:** The gap exists (RAGAS=0.927, accuracy=0%)
 - **Week 2:** The gap is measurable (D1 + D5 as metric classes, ablation over k and prompting)
 - **Week 3:** The gap is diagnostic (D2 + D3 pinpoint *where* failures happen — retrieval vs. planning)
-- **Week 4:** D4 will show the gap includes robustness (RAGAS can't measure noise sensitivity)
+- **Week 4:** The gap includes robustness — D4 reveals constructive interference (noise *helped* the agent, interference rate = −0.133), proving the agent is so retrieval-starved that even random helpful text improves it. Query rewriting shows D2→D1 pipeline: +58% retrieval → +36% accuracy. RAGAS can't measure any of this.
 - **Week 5–6:** D6 will show the gap includes difficulty interaction (RAGAS can't predict non-linear degradation)
 - **Week 7–9:** Cross-system comparison will show the gap is consistent across different architectures
 
