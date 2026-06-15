@@ -61,8 +61,9 @@ AgenticRAG-Bench is a research benchmark that evaluates **agentic RAG systems** 
 | 2a | 5 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 3 | None | 1/5 = 20% | — | — | 0.763 | Real per-question KB + stronger embeddings eliminate loops, but reveal early stopping and weak multi-hop planning. |
 | 2b | 5 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 5 | None | 0/5 = 0% | — | — | 0.692 | Increasing k does not improve accuracy. Failure is planning, not recall. |
 | 2c | 5 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 5 | Multi-step prompt | 2/5 = 40% | — | — | 0.809 | System prompt enforcement improves accuracy. Remaining errors: entity drift and KB gaps, not retrieval. |
-| 3 | 50 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 3 | Multi-step prompt | 11/50 = 22% | 0.183 (0.191 → excluding degenerate) | 0.626 | 0.811 | D2 and D3 implemented as metric classes. D3 undershooting fixed — avg steps 1.38 → 2.02. Dominant failure mode shifts from "gave up early" (Type B) to "planned well, retrieved nothing" (Type C, 14/50 questions). Degenerate output detection added to D1. D5 degenerate penalty fixed. |
+| 3 | 50 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 3 | Multi-step prompt | 11/50 = 22% | 0.183 | 0.626 | 0.811 | D2 and D3 implemented as metric classes. D3 undershooting fixed — avg steps 1.38 → 2.02. Dominant failure mode shifts from "gave up early" (Type B) to "planned well, retrieved nothing" (Type C, 14/50 questions). Degenerate output detection added to D1. D5 degenerate penalty fixed. |
 | 4 | 50 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 3 | Multi-step prompt + query rewriting | 15/50 = 30% | 0.302 | 0.647 | 0.860 | Query rewriting → D2 +65% (0.183→0.302), accuracy +36% (22%→30%). D4 implemented: interference rate = −0.133 (noise helped, not hurt). Cross-question swap noise too weak — constructive interference. 8 questions now achieve multi-hit retrieval (D2>0.467), impossible in Week 3. |
+| 5 | 50 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text + BM25 | 3 | Multi-step prompt + query rewriting + rewrite validation | TBD | TBD | TBD | TBD | Hybrid BM25+FAISS retrieval with reciprocal rank fusion. Rewrite validation rejects meta-language rewrites. Targets D2=0 reduction from 15 to <10. |
 
 ---
 
@@ -211,7 +212,8 @@ agenticrag-bench/
 │   ├── 1_agenticrag_bench.ipynb     ← Week 1: evaluation gap proof-of-concept
 │   ├── 2_agenticrag_bench.ipynb     ← Week 2: D1 + D5 metric classes, 3-way ablation
 │   ├── 3_agenticrag_bench.ipynb     ← Week 3: D2 + D3 metrics, 50-question benchmark
-│   └── 4_agenticrag_bench.ipynb     ← Week 4: query rewriting + D4 noise robustness
+│   ├── 4_agenticrag_bench.ipynb     ← Week 4: query rewriting + D4 noise robustness
+│   └── 5_agenticrag_bench.ipynb     ← Week 5: hybrid BM25+FAISS + rewrite validation
 ├── data/
 │   ├── questions/
 │   │   └── musique_10.json           ← MuSiQue questions
@@ -223,7 +225,9 @@ agenticrag-bench/
 ├── notes/
 │   ├── 1_observations.md
 │   ├── 2_observations.md
-│   └── 3_observations.md
+│   ├── 3_observations.md
+│   ├── 4_observations.md
+│   └── 5_observations.md
 ├── src/                              ← evaluation harness
 ├── .env.example
 ├── .gitignore
@@ -332,8 +336,8 @@ A degenerate output is when the agent produces a structurally broken answer that
 - [x] **Week 2** — Evaluation harness: D1 + D5 metric classes, per-question FAISS indexes, loop detection, 3-way ablation (k=3, k=5, k=5+prompt)
 - [x] **Week 3** — D2 + D3 metric classes, 50-question benchmark, degenerate output detection, D5 degenerate fix, `tokens_per_correct_answer` fix, undershooting fixed (avg steps 1.38 → 2.02)
 - [x] **Week 4** — D4 noise robustness: query rewriting for D2 improvement, cross-question noise injection, interference rate measurement
-- [ ] **Week 5** — D6 difficulty interaction: seed dataset with single-hop low-distractor questions, plot accuracy degradation curve across difficulty axes
-- [ ] **Week 6** — Query rewriting / retrieval improvement: address dominant Type C failure (planned well, retrieved nothing)
+- [ ] **Week 5** — Hybrid retrieval: BM25+FAISS with reciprocal rank fusion, rewrite validation for bad LLM rewrites, targets D2=0 reduction
+- [ ] **Week 6** — D6 difficulty interaction: seed dataset with single-hop low-distractor questions, plot accuracy degradation curve across difficulty axes
 - [ ] **Week 7–9** — Full benchmark runs across 4–5 systems and 3+ models
 - [ ] **Week 10** — arXiv preprint + public leaderboard on HuggingFace Spaces
 
