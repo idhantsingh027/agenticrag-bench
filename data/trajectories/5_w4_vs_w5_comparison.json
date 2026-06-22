@@ -1,0 +1,630 @@
+{
+  "d2_improved": [
+    {
+      "qid": "2hop__701895_752697",
+      "question": "What administrative territorial entity is the owner of Ciuda",
+      "d2_w4": 0.333,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__481349_302087",
+      "question": "Which company owns the manufacturer of Learjet 60?",
+      "d2_w4": 0.467,
+      "d2_w5": 0.6,
+      "correct_w4": true,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__390947_232243",
+      "question": "What is the goal of the group that European Movement Germany",
+      "d2_w4": 0.466,
+      "d2_w5": 0.6,
+      "correct_w4": true,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__635187_861533",
+      "question": "What province shares a border with the province where Lago D",
+      "d2_w4": 0.333,
+      "d2_w5": 0.6,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__166824_185403",
+      "question": "What league does the team that plays in Stadio Ciro Vigorito",
+      "d2_w4": 0.0,
+      "d2_w5": 0.333,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__698577_851686",
+      "question": "What is a notable work written by the author of The Timothy ",
+      "d2_w4": 0.0,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__402530_774333",
+      "question": "What other county does the county where Imperial is located ",
+      "d2_w4": 0.289,
+      "d2_w5": 0.6,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__195917_575657",
+      "question": "In what county is William W. Blair's birthplace located?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.333,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__505860_650613",
+      "question": "Where was the author of Hannibal and Scipio educated at?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.333,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__821197_368148",
+      "question": "In which county is Southern Maryland Electric Cooperative he",
+      "d2_w4": 0.0,
+      "d2_w5": 0.466,
+      "correct_w4": true,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__702496_430061",
+      "question": "What county was Tim Dubois born in?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.6,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__647996_551681",
+      "question": "What is another notable work made by the author of Miss Sara",
+      "d2_w4": 0.0,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__673655_316668",
+      "question": "What instrument is played by the person from The Blackout Al",
+      "d2_w4": 0.333,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__574419_270105",
+      "question": "What is the seat of the county where Van Hook Township is lo",
+      "d2_w4": 0.0,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__341305_332933",
+      "question": "What is the capital of the county that Pine Springs is locat",
+      "d2_w4": 0.333,
+      "d2_w5": 0.466,
+      "correct_w4": true,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__731228_609866",
+      "question": "What district is the headquarter of Julia's House located?",
+      "d2_w4": 0.333,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__335418_279684",
+      "question": "What team was Anna Benson's husband on?",
+      "d2_w4": 0.333,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__475070_532404",
+      "question": "Where was the spouse of Frances Tupper born?",
+      "d2_w4": 0.333,
+      "d2_w5": 0.6,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__700093_455653",
+      "question": "Who founded the political party of Dimuthu Bandara Abayakoon",
+      "d2_w4": 0.0,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__411091_625230",
+      "question": "In which county is Mark Dismore's birthplace located?",
+      "d2_w4": 0.466,
+      "d2_w5": 0.6,
+      "correct_w4": true,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__455158_247871",
+      "question": "What county is the NRHEG High School located in?",
+      "d2_w4": 0.466,
+      "d2_w5": 0.6,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__765678_310556",
+      "question": "Who was married to the star of No Escape?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": false
+    }
+  ],
+  "d2_degraded": [
+    {
+      "qid": "2hop__683835_709167",
+      "question": "What award did the author of The Red Tree receive?",
+      "d2_w4": 0.333,
+      "d2_w5": 0.0,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__569582_304416",
+      "question": "What record label is the performer of Almost Made Ya signed ",
+      "d2_w4": 0.467,
+      "d2_w5": 0.333,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__554167_451128",
+      "question": "Who is the child of the Victim of Romance performer?",
+      "d2_w4": 0.333,
+      "d2_w5": 0.0,
+      "correct_w4": true,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__549146_223121",
+      "question": "What record label did the person who is part of The Bruce Le",
+      "d2_w4": 0.6,
+      "d2_w5": 0.466,
+      "correct_w4": true,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__191125_781346",
+      "question": "What place does the administrative territorial entity that J",
+      "d2_w4": 0.289,
+      "d2_w5": 0.244,
+      "correct_w4": false,
+      "correct_w5": false
+    }
+  ],
+  "d2_same": [
+    {
+      "qid": "2hop__460946_294723",
+      "question": "Who is the spouse of the Green performer?",
+      "d2_w4": 0.467,
+      "d2_w5": 0.467,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__252311_366220",
+      "question": "Who founded the company that distributed the film UHF?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.0,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__259228_793698",
+      "question": "Where is Ulrich Walter's employer headquartered?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.0,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__697790_864352",
+      "question": "Who is the child of Caroline LeRoy's spouse?",
+      "d2_w4": 0.6,
+      "d2_w5": 0.6,
+      "correct_w4": true,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__207476_625987",
+      "question": "Who is the grandmother of Philippe, Duke of Orl\u00e9ans?",
+      "d2_w4": 0.466,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__354635_174222",
+      "question": "What company succeeded the owner of Empire Sports Network?",
+      "d2_w4": 0.333,
+      "d2_w5": 0.333,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__362107_652514",
+      "question": "In which borough was Callum McManaman born?",
+      "d2_w4": 0.333,
+      "d2_w5": 0.333,
+      "correct_w4": true,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__197470_271394",
+      "question": "Where was Tyler MacDuff's child educated?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.0,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__458131_174974",
+      "question": "Who is the spouse of the Rabbit Hole's producer?",
+      "d2_w4": 0.466,
+      "d2_w5": 0.466,
+      "correct_w4": true,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__299142_347613",
+      "question": "Who is the child of Sigrid Eskilsdotter's child?",
+      "d2_w4": 0.6,
+      "d2_w5": 0.6,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__528263_865831",
+      "question": "In which county is Kimbrough Memorial Stadium located?",
+      "d2_w4": 0.6,
+      "d2_w5": 0.6,
+      "correct_w4": true,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__403712_793210",
+      "question": "Who is the father of Edward Baring, 1st Baron Revelstoke's f",
+      "d2_w4": 0.466,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__832795_350510",
+      "question": "What group was the performer of Be the One a member of?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.0,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__744055_408817",
+      "question": "Who is the lead singer of the band performing Bang Bang Rock",
+      "d2_w4": 0.734,
+      "d2_w5": 0.734,
+      "correct_w4": true,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__726717_610238",
+      "question": "What is the network which National Cycle Route 57 is part of",
+      "d2_w4": 0.6,
+      "d2_w5": 0.6,
+      "correct_w4": true,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__499577_617190",
+      "question": "Who is the spouse of the child of Peter Andreas Heiberg?",
+      "d2_w4": 0.333,
+      "d2_w5": 0.333,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__685280_510757",
+      "question": "The Unwinding author volunteered for which organisation?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.0,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__693444_220151",
+      "question": "Who is the spouse of Young Man Luther's author?",
+      "d2_w4": 0.333,
+      "d2_w5": 0.333,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__235471_565925",
+      "question": "What record label did the performer of The Place and the Tim",
+      "d2_w4": 0.6,
+      "d2_w5": 0.6,
+      "correct_w4": true,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__310456_846599",
+      "question": "Who is the child of the person who followed Tihomir of Serbi",
+      "d2_w4": 0.6,
+      "d2_w5": 0.6,
+      "correct_w4": true,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__512773_346751",
+      "question": "Bancroft's county borders what county?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.0,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__423972_540249",
+      "question": "Who was the sibling of Nannina de' Medici?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.0,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__189094_612080",
+      "question": "What league does the team that occupies the Rabat Ajax Footb",
+      "d2_w4": 0.466,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": false
+    }
+  ],
+  "d2_zero_fixed": [
+    {
+      "qid": "2hop__166824_185403",
+      "question": "What league does the team that plays in Stadio Ciro Vigorito",
+      "d2_w4": 0.0,
+      "d2_w5": 0.333,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__698577_851686",
+      "question": "What is a notable work written by the author of The Timothy ",
+      "d2_w4": 0.0,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__195917_575657",
+      "question": "In what county is William W. Blair's birthplace located?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.333,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__505860_650613",
+      "question": "Where was the author of Hannibal and Scipio educated at?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.333,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__821197_368148",
+      "question": "In which county is Southern Maryland Electric Cooperative he",
+      "d2_w4": 0.0,
+      "d2_w5": 0.466,
+      "correct_w4": true,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__702496_430061",
+      "question": "What county was Tim Dubois born in?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.6,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__647996_551681",
+      "question": "What is another notable work made by the author of Miss Sara",
+      "d2_w4": 0.0,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__574419_270105",
+      "question": "What is the seat of the county where Van Hook Township is lo",
+      "d2_w4": 0.0,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__700093_455653",
+      "question": "Who founded the political party of Dimuthu Bandara Abayakoon",
+      "d2_w4": 0.0,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__765678_310556",
+      "question": "Who was married to the star of No Escape?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": false
+    }
+  ],
+  "newly_correct": [
+    {
+      "qid": "2hop__701895_752697",
+      "question": "What administrative territorial entity is the owner of Ciuda",
+      "d2_w4": 0.333,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__635187_861533",
+      "question": "What province shares a border with the province where Lago D",
+      "d2_w4": 0.333,
+      "d2_w5": 0.6,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__698577_851686",
+      "question": "What is a notable work written by the author of The Timothy ",
+      "d2_w4": 0.0,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__402530_774333",
+      "question": "What other county does the county where Imperial is located ",
+      "d2_w4": 0.289,
+      "d2_w5": 0.6,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__195917_575657",
+      "question": "In what county is William W. Blair's birthplace located?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.333,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__505860_650613",
+      "question": "Where was the author of Hannibal and Scipio educated at?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.333,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__702496_430061",
+      "question": "What county was Tim Dubois born in?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.6,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__647996_551681",
+      "question": "What is another notable work made by the author of Miss Sara",
+      "d2_w4": 0.0,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__574419_270105",
+      "question": "What is the seat of the county where Van Hook Township is lo",
+      "d2_w4": 0.0,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__685280_510757",
+      "question": "The Unwinding author volunteered for which organisation?",
+      "d2_w4": 0.0,
+      "d2_w5": 0.0,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__335418_279684",
+      "question": "What team was Anna Benson's husband on?",
+      "d2_w4": 0.333,
+      "d2_w5": 0.466,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__475070_532404",
+      "question": "Where was the spouse of Frances Tupper born?",
+      "d2_w4": 0.333,
+      "d2_w5": 0.6,
+      "correct_w4": false,
+      "correct_w5": true
+    },
+    {
+      "qid": "2hop__455158_247871",
+      "question": "What county is the NRHEG High School located in?",
+      "d2_w4": 0.466,
+      "d2_w5": 0.6,
+      "correct_w4": false,
+      "correct_w5": true
+    }
+  ],
+  "newly_wrong": [
+    {
+      "qid": "2hop__362107_652514",
+      "question": "In which borough was Callum McManaman born?",
+      "d2_w4": 0.333,
+      "d2_w5": 0.333,
+      "correct_w4": true,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__458131_174974",
+      "question": "Who is the spouse of the Rabbit Hole's producer?",
+      "d2_w4": 0.466,
+      "d2_w5": 0.466,
+      "correct_w4": true,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__554167_451128",
+      "question": "Who is the child of the Victim of Romance performer?",
+      "d2_w4": 0.333,
+      "d2_w5": 0.0,
+      "correct_w4": true,
+      "correct_w5": false
+    },
+    {
+      "qid": "2hop__235471_565925",
+      "question": "What record label did the performer of The Place and the Tim",
+      "d2_w4": 0.6,
+      "d2_w5": 0.6,
+      "correct_w4": true,
+      "correct_w5": false
+    }
+  ]
+}
