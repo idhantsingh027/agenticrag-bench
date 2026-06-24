@@ -63,7 +63,8 @@ AgenticRAG-Bench is a research benchmark that evaluates **agentic RAG systems** 
 | 2c | 5 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 5 | Multi-step prompt | 2/5 = 40% | — | — | 0.809 | System prompt enforcement improves accuracy. Remaining errors: entity drift and KB gaps, not retrieval. |
 | 3 | 50 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 3 | Multi-step prompt | 11/50 = 22% | 0.183 | 0.626 | 0.811 | D2 and D3 implemented as metric classes. D3 undershooting fixed — avg steps 1.38 → 2.02. Dominant failure mode shifts from "gave up early" (Type B) to "planned well, retrieved nothing" (Type C, 14/50 questions). Degenerate output detection added to D1. D5 degenerate penalty fixed. |
 | 4 | 50 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text | 3 | Multi-step prompt + query rewriting | 15/50 = 30% | 0.302 | 0.647 | 0.860 | Query rewriting → D2 +65% (0.183→0.302), accuracy +36% (22%→30%). D4 implemented: interference rate = −0.133 (noise helped, not hurt). Cross-question swap noise too weak — constructive interference. 8 questions now achieve multi-hit retrieval (D2>0.467), impossible in Week 3. |
-| 5 | 50 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text + BM25 | 3 | Multi-step prompt + query rewriting + rewrite validation | TBD | TBD | TBD | TBD | Hybrid BM25+FAISS retrieval with reciprocal rank fusion. Rewrite validation rejects meta-language rewrites. Targets D2=0 reduction from 15 to <10. |
+| 5 | 50 (MuSiQue) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text + BM25 | 3 | Multi-step prompt + query rewriting + rewrite validation | 24/50 = 48% | 0.416 | 0.698 | 0.883 | Hybrid BM25+FAISS with reciprocal rank fusion. D2=0 cut from 15→7. 13 newly correct, 4 regressions. 39/101 rewrites rejected by validation. D2→D1 pipeline confirmed: better retrieval drives accuracy. |
+| 6 | 250 (MuSiQue, 5 conditions) | LangGraph ReAct + Llama 3.1 8B | nomic-embed-text + BM25 | 3 | Multi-step prompt + query rewriting + rewrite validation | A=74%, B=48%, C=64%, D=30%, E=24% | A=0.414, E=0.278 | A=0.599, E=0.494 | — | D6 Difficulty Interaction Collapse confirmed: interaction effect = +14pp (predicted additive 38%, actual 24%). Super-linear collapse — RC costs 26pp, RD costs 10pp, but combined costs 50pp. 8 "interaction victims" pass B and C individually but fail E. |
 
 ---
 
@@ -156,7 +157,58 @@ The interference rate is **negative** — noise helped more than it hurt. This i
 
 ---
 
-## Quickstart
+## Week 6 deep-dive
+
+### What changed
+
+Week 6 implemented D6 (Difficulty Interaction Collapse) — a controlled experiment testing whether accuracy degrades **super-linearly** when multiple difficulty axes are high simultaneously. Instead of finding new questions, we created 5 controlled conditions from the same 50 MuSiQue questions by varying reasoning complexity (RC: 1-hop vs 2-hop) and retrieval difficulty (RD: 6, 12, or 18 distractors).
+
+**1-hop variant creation:** Each 2-hop question has a decomposition (e.g., `"UHF >> distributed by" → "Orion Pictures"` + `"#1 >> founded by" → "Mike Medavoy"`). We take step 2, substitute step 1's answer, and generate a natural-language question: `"Who founded Orion Pictures?"` using 44 relation templates covering all 50 questions.
+
+### The D6 interaction effect — super-linear collapse confirmed
+
+| Condition | RC | Distractors | Accuracy | D2=0 count |
+|---|---|---|---|---|
+| A (easy baseline) | 1 | 6 | **74%** | 3 |
+| C (hard retrieval) | 1 | 18 | **64%** | 10 |
+| B (hard reasoning) | 2 | 6 | **48%** | 15 |
+| D (medium both) | 2 | 12 | **30%** | 17 |
+| E (hard both) | 2 | 18 | **24%** | 20 |
+
+```
+Interaction effect calculation:
+  RC penalty alone:    74% → 48% = −26pp
+  RD penalty alone:    74% → 64% = −10pp
+  Predicted additive:  74% − 26% − 10% = 38%
+  Actual (E):          24%
+  Interaction effect:  38% − 24% = +14pp  ← SUPER-LINEAR
+```
+
+If RC and RD were independent, Condition E should score ~38%. It actually scores **24%** — an extra 14pp accuracy loss from the interaction. The difficulties compound.
+
+### Key finding — reasoning is 2.6× harder than retrieval
+
+- **RC penalty** (making questions 2-hop): −26pp
+- **RD penalty** (tripling distractors): −10pp
+
+Multi-hop reasoning is the dominant bottleneck for `llama3.1:8b`. Retrieval noise (more distractors) matters, but much less. This aligns with Week 4's D4 finding — the agent is more limited by reasoning than by retrieval quality.
+
+### Per-question patterns
+
+| Pattern | Count | What it means |
+|---|---|---|
+| A=✓ B=✗ C=✓ E=✗ | 14 | RC-sensitive: 1-hop solves it, 2-hop breaks it regardless of retrieval |
+| A=✓ B=✓ C=✓ E=✓ | 9 | Robust core: survives even the hardest condition |
+| A=✓ B=✓ C=✓ E=✗ | 7 | **Interaction victims**: handles each axis alone, fails when both hit |
+| A=✗ B=✗ C=✗ E=✗ | 7 | Universally hard: can't solve even as 1-hop with 6 distractors |
+
+The 7 "interaction victims" (pass B individually, pass C individually, fail E) are the clearest evidence of super-linear collapse — neither difficulty alone is enough to break the agent, but together they do.
+
+### Confound: tool-calling flakiness
+
+14/50 questions consistently produce empty trajectories in all 2-hop conditions (B, D, E) — the LLM outputs text instead of making a tool call. These same 14 questions work fine as 1-hop (conditions A, C). This adds systematic noise to the 2-hop accuracy numbers but doesn't invalidate the interaction effect, since the 14 empty-trajectory questions are constant across B, D, and E.
+
+
 
 ### Prerequisites
 
@@ -213,7 +265,8 @@ agenticrag-bench/
 │   ├── 2_agenticrag_bench.ipynb     ← Week 2: D1 + D5 metric classes, 3-way ablation
 │   ├── 3_agenticrag_bench.ipynb     ← Week 3: D2 + D3 metrics, 50-question benchmark
 │   ├── 4_agenticrag_bench.ipynb     ← Week 4: query rewriting + D4 noise robustness
-│   └── 5_agenticrag_bench.ipynb     ← Week 5: hybrid BM25+FAISS + rewrite validation
+│   ├── 5_agenticrag_bench.ipynb     ← Week 5: hybrid BM25+FAISS + rewrite validation
+│   └── 6_agenticrag_bench.ipynb     ← Week 6: D6 difficulty interaction collapse
 ├── data/
 │   ├── questions/
 │   │   └── musique_10.json           ← MuSiQue questions
@@ -227,7 +280,8 @@ agenticrag-bench/
 │   ├── 2_observations.md
 │   ├── 3_observations.md
 │   ├── 4_observations.md
-│   └── 5_observations.md
+│   ├── 5_observations.md
+│   └── 6_observations.md
 ├── src/                              ← evaluation harness
 ├── .env.example
 ├── .gitignore
@@ -336,8 +390,8 @@ A degenerate output is when the agent produces a structurally broken answer that
 - [x] **Week 2** — Evaluation harness: D1 + D5 metric classes, per-question FAISS indexes, loop detection, 3-way ablation (k=3, k=5, k=5+prompt)
 - [x] **Week 3** — D2 + D3 metric classes, 50-question benchmark, degenerate output detection, D5 degenerate fix, `tokens_per_correct_answer` fix, undershooting fixed (avg steps 1.38 → 2.02)
 - [x] **Week 4** — D4 noise robustness: query rewriting for D2 improvement, cross-question noise injection, interference rate measurement
-- [ ] **Week 5** — Hybrid retrieval: BM25+FAISS with reciprocal rank fusion, rewrite validation for bad LLM rewrites, targets D2=0 reduction
-- [ ] **Week 6** — D6 difficulty interaction: seed dataset with single-hop low-distractor questions, plot accuracy degradation curve across difficulty axes
+- [x] **Week 5** — Hybrid retrieval: BM25+FAISS with reciprocal rank fusion, rewrite validation for bad LLM rewrites, D2=0 cut from 15→7, accuracy 30%→48%
+- [x] **Week 6** — D6 difficulty interaction collapse: 5 controlled conditions (RC × RD), 250 questions, super-linear collapse confirmed (+14pp interaction effect), 1-hop variants via decomposition, publication-quality plots
 - [ ] **Week 7–9** — Full benchmark runs across 4–5 systems and 3+ models
 - [ ] **Week 10** — arXiv preprint + public leaderboard on HuggingFace Spaces
 
