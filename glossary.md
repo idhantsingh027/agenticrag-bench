@@ -251,19 +251,45 @@ efficiency_score = 1.0 − (redundancy × 0.5) − (token_penalty × 0.3) − lo
 
 ---
 
-### D6 — Difficulty Interaction Collapse *(preview — needs more data)*
+### D6 — Difficulty Interaction Collapse *(implemented — Week 6)*
 
 **Simple version:** Does the agent fall apart much faster when a question is hard in multiple ways at once, rather than just hard in one way?
 
-**Background — the 4 difficulty axes:**
-- **Reasoning Complexity (RC):** How many hops? 1-hop is easy, 3-hop is hard.
-- **Retrieval Difficulty (RD):** How many distractor documents that look relevant but aren't? More distractors = harder.
-- **Entity Ambiguity (EA):** Are there similar-sounding names that could be confused?
-- **Temporal Complexity (TC):** Does the answer depend on time? ("Who was president of X in 2015?")
+**Background — the 2 difficulty axes tested in Week 6:**
+- **Reasoning Complexity (RC):** How many hops? RC=1 (single-hop, easy) vs RC=2 (2-hop, hard).
+- **Retrieval Difficulty (RD):** How many distractor documents? RD=1 (2 distractors), RD=2 (8 distractors), RD=3 (18 distractors, original).
 
-**The D6 hypothesis:** A question with RC=3 (hard reasoning) might cause 30% accuracy drop. A question with RD=3 (many distractors) might cause 25% accuracy drop. But a question with BOTH RC=3 AND RD=3 might cause 80% accuracy drop — much worse than 30%+25%=55% would predict. This super-linear degradation is what D6 tries to measure.
+**The D6 hypothesis:** A question with RC=2 (hard reasoning) might cause X% accuracy drop. A question with RD=3 (many distractors) might cause Y% accuracy drop. But a question with BOTH RC=2 AND RD=3 might cause more than X%+Y% accuracy drop. This super-linear degradation is what D6 measures.
 
-**Why we can't compute D6 yet:** All 50 questions in Week 3 landed in the exact same bucket — RC=2, RD=3 (2 hard axes). We need questions with 0, 1, 2, 3, and 4 hard axes to plot the curve. Week 5 plan: deliberately inject 1-hop, low-distractor questions to create the baseline.
+**How Week 6 tests this — controlled difficulty variants:**
+Instead of finding new questions, we create 5 conditions from the *same* 50 questions by manipulating RC and RD:
+
+| Condition | RC | Distractors | Accuracy | Description |
+|---|---|---|---|---|
+| A | 1 | 6 | **74%** | Easy baseline: 1-hop question, 6 distractors |
+| B | 2 | 6 | **48%** | Hard reasoning only: 2-hop, 6 distractors |
+| C | 1 | 18 | **64%** | Hard retrieval only: 1-hop, 18 distractors |
+| D | 2 | 12 | **30%** | Medium both: 2-hop, 12 distractors |
+| E | 2 | 18 | **24%** | Hard both: 2-hop, 18 distractors (original) |
+
+**Creating 1-hop variants (RC=1):** Each 2-hop question has a decomposition like `"UHF >> distributed by" → "Orion Pictures"` + `"#1 >> founded by" → "Mike Medavoy"`. We take step 2 and expand it into a natural-language question: `"Who founded Orion Pictures?"` using relation templates.
+
+**Creating low-distractor variants (RD=1, RD=2):** We randomly sample 2 or 8 distractors from the original 18, with a fixed seed (42 + question hash) for reproducibility.
+
+**The D6 interaction effect formula:**
+```
+drop_from_RC = accuracy(A) − accuracy(B)       # cost of hard reasoning alone
+drop_from_RD = accuracy(A) − accuracy(C)       # cost of hard retrieval alone
+predicted_additive = accuracy(A) − drop_RC − drop_RD   # if independent
+actual = accuracy(E)                            # what actually happens
+interaction_effect = predicted_additive − actual # positive = super-linear collapse
+```
+
+If `interaction_effect > 0.05`, the difficulties interact (compound). If ≈ 0, they're independent. If negative, they're redundant.
+
+**Week 6 result:** Interaction effect = **+0.14 (14 percentage points)**. Super-linear collapse confirmed. RC alone costs 26pp, RD alone costs 10pp, but combined they cost 50pp (predicted additive: 36pp). The extra 14pp cannot be explained by either axis alone — the difficulties compound. 7 questions are "interaction victims" that pass B and C individually but fail E.
+
+**Note on other difficulty axes:** Entity Ambiguity (EA) and Temporal Complexity (TC) are defined in the taxonomy but not yet tested — they require different dataset constructions. RC × RD is the most important interaction because it maps to the core agent loop: plan (RC) → retrieve (RD) → reason.
 
 ---
 
@@ -391,6 +417,8 @@ Did the agent produce the right final answer? (D1)
 - D4 showed noise *helped* the agent (interference rate = −0.133) — the agent is so retrieval-starved that any additional text improves it
 - 2 of 4 "flipped" questions had identical D2 in clean and noisy — noise confused the LLM's reasoning, not retrieval. D4 catches a failure mode that D2 alone cannot see.
 
+**D1 + D2 via hybrid retrieval** (Week 5) confirmed the causal link: adding BM25 to FAISS lifted D2 from 0.302→0.416 and accuracy from 30%→48%. D2=0 count dropped from 15→7. This is the strongest evidence that D2 *predicts* D1.
+
 **RAGAS** sees only the final answer and final retrieved docs. It would see all 50 questions as high-scoring (fluent, on-topic answers) and have no way to distinguish the ideal-path questions from Type-C failures, nor detect constructive interference.
 
 ---
@@ -405,8 +433,9 @@ Each week adds evidence:
 - **Week 1:** The gap exists (RAGAS=0.927, accuracy=0%)
 - **Week 2:** The gap is measurable (D1 + D5 as metric classes, ablation over k and prompting)
 - **Week 3:** The gap is diagnostic (D2 + D3 pinpoint *where* failures happen — retrieval vs. planning)
-- **Week 4:** The gap includes robustness — D4 reveals constructive interference (noise *helped* the agent, interference rate = −0.133), proving the agent is so retrieval-starved that even random helpful text improves it. Query rewriting shows D2→D1 pipeline: +58% retrieval → +36% accuracy. RAGAS can't measure any of this.
-- **Week 5–6:** D6 will show the gap includes difficulty interaction (RAGAS can't predict non-linear degradation)
+- **Week 4:** The gap includes robustness — D4 reveals constructive interference (noise *helped* the agent, interference rate = −0.133), proving the agent is so retrieval-starved that even random helpful text improves it. Query rewriting shows D2→D1 pipeline: +65% retrieval → +36% accuracy. RAGAS can't measure any of this.
+- **Week 5:** Hybrid retrieval confirms D2→D1 causation — BM25+FAISS lifts D2 from 0.302→0.416, accuracy from 30%→48%. D2=0 cut in half (15→7). 39/101 bad rewrites caught by validation.
+- **Week 6:** D6 shows the gap includes difficulty interaction — RAGAS can't predict non-linear degradation when difficulty axes compound. 5 conditions × 50 questions. Interaction effect = +14pp (super-linear collapse confirmed). RC is 2.6× harder than RD. 7 "interaction victims" prove compounding.
 - **Week 7–9:** Cross-system comparison will show the gap is consistent across different architectures
 
 The final output is an arXiv preprint and a public leaderboard on HuggingFace Spaces.
