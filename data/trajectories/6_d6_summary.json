@@ -1,0 +1,58 @@
+{
+  "stats": {
+    "A": {
+      "n": 50,
+      "correct": 37,
+      "accuracy": 0.74,
+      "avg_d1": 0.7531399999999999,
+      "avg_d2": 0.41409999999999997,
+      "avg_d3": 0.5986199999999999,
+      "d2_zero": 3
+    },
+    "B": {
+      "n": 50,
+      "correct": 24,
+      "accuracy": 0.48,
+      "avg_d1": 0.53908,
+      "avg_d2": 0.3986200000000001,
+      "avg_d3": 0.5197,
+      "d2_zero": 15
+    },
+    "C": {
+      "n": 50,
+      "correct": 32,
+      "accuracy": 0.64,
+      "avg_d1": 0.6504400000000001,
+      "avg_d2": 0.35417999999999994,
+      "avg_d3": 0.60146,
+      "d2_zero": 10
+    },
+    "D": {
+      "n": 50,
+      "correct": 15,
+      "accuracy": 0.3,
+      "avg_d1": 0.3855399999999999,
+      "avg_d2": 0.3300399999999999,
+      "avg_d3": 0.49826000000000015,
+      "d2_zero": 17
+    },
+    "E": {
+      "n": 50,
+      "correct": 12,
+      "accuracy": 0.24,
+      "avg_d1": 0.30134,
+      "avg_d2": 0.27796,
+      "avg_d3": 0.4943400000000001,
+      "d2_zero": 20
+    }
+  },
+  "interaction": {
+    "baseline_accuracy": 0.74,
+    "drop_from_RC": 0.26,
+    "drop_from_RD": 0.09999999999999998,
+    "predicted_additive": 0.38,
+    "actual_combined": 0.24,
+    "interaction_effect": 0.14,
+    "super_linear": true
+  }
+}
